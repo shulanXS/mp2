@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: #241c15;
+  background: #fdf8f2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid #c9b6a2;
+  background: #fff;
+  color: inherit;
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+}
+
+button:hover {
+  background: #f1e6d8;
+}
+
+input[type='text'],
+select {
+  font: inherit;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #c9b6a2;
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+}
+
+h1 {
+  font-size: 1.3rem;
+}
+
+/* Result count, shared with the list and gallery. */
+.count {
+  margin: 0 0 0.9rem;
+  font-size: 0.85rem;
+  color: #7a6a5a;
+}
+
+.linkButton {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: #b4560f;
+  text-decoration: underline;
+}
+
+.linkButton:hover {
+  background: none;
+  color: #8f4309;
+}
+
+.pillOn {
+  background: #b4560f;
+  border-color: #b4560f;
+  color: #fff;
+}
+
+.pillOn:hover {
+  background: #8f4309;
+  border-color: #8f4309;
+  color: #fff;
+}
+
+/* Pill shape, also shared by the sort and category chips. */
+.pill {
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+/* Grid shape shared by the list and the gallery; each page's module sets the
+   column minimum on top of this. */
+.resultsGrid {
+  list-style: none;
+  display: grid;
+  gap: 0.8rem;
+}

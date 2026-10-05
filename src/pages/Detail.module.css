@@ -1,0 +1,136 @@
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.navMid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.back {
+  background: #b4560f;
+  border: 1px solid #b4560f;
+  color: #fff;
+  font: inherit;
+  line-height: normal;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+  text-decoration: none;
+}
+
+.back:hover {
+  background: #8f4309;
+  border-color: #8f4309;
+  color: #fff;
+}
+
+.back:focus-visible {
+  outline: 2px solid #b4560f;
+  outline-offset: 2px;
+}
+
+.position {
+  color: #7a6a5a;
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  background: #fdecea;
+  color: #8a1c11;
+  border: 1px solid #f0b4ac;
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+  background: #fff;
+  border: 1px solid #eadccc;
+  border-radius: 8px;
+  padding: 1.2rem;
+}
+
+.body > img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.3rem 0.8rem;
+  margin: 0.8rem 0;
+  font-size: 0.9rem;
+}
+
+.meta dt {
+  font-weight: 600;
+  color: #7a6a5a;
+}
+
+.meta dd {
+  overflow-wrap: anywhere;
+}
+
+/* The external recipe link is the only link that should read as a link. */
+.meta dd a {
+  color: #b4560f;
+  text-decoration: underline;
+}
+
+.meta dd a:hover {
+  color: #8f4309;
+}
+
+.body h1 {
+  /* Long dish names must not push the grid open. */
+  overflow-wrap: anywhere;
+}
+
+.emptyNote {
+  font-size: 0.88rem;
+  color: #7a6a5a;
+}
+
+.body h2 {
+  font-size: 1.05rem;
+  margin: 1rem 0 0.4rem;
+}
+
+.ingredients {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.25rem;
+  font-size: 0.88rem;
+}
+
+.instructions {
+  white-space: pre-line;
+  line-height: 1.6;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 640px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+}

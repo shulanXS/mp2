@@ -1,0 +1,42 @@
+/* Rows are wide, so they need a wider minimum than the gallery's square tiles. */
+.list {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.row {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #eadccc;
+  border-radius: 8px;
+  padding: 0.6rem;
+  height: 100%;
+}
+
+.row:hover {
+  border-color: #b4560f;
+}
+
+.row img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.rowText {
+  min-width: 0;
+}
+
+.row h2 {
+  font-size: 1rem;
+  /* Long dish names must not blow out the column. */
+  overflow-wrap: anywhere;
+}
+
+.row p {
+  font-size: 0.85rem;
+  color: #7a6a5a;
+}

@@ -1,0 +1,41 @@
+.sortBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.sortLabel {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7a6a5a;
+}
+
+.sortChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.sortChip {
+  /* Shape from the global `.pill`, shared with the category chips. */
+  composes: pill from '../index.css';
+}
+
+.sortChipOn {
+  composes: pillOn from '../index.css';
+}
+
+/* Fixed width so flipping the direction does not shift the chips. */
+.orderToggle {
+  margin-left: auto;
+  min-width: 8.5rem;
+}
+
+@media (max-width: 640px) {
+  .orderToggle {
+    margin-left: 0;
+  }
+}

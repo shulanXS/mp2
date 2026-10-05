@@ -1,0 +1,32 @@
+.wrap {
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.wrap h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+}
+
+.wrap p {
+  color: #7a6a5a;
+  font-size: 0.92rem;
+  margin-bottom: 1.1rem;
+}
+
+.home {
+  display: inline-block;
+  background: #b4560f;
+  border: 1px solid #b4560f;
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home:hover {
+  background: #8f4309;
+  border-color: #8f4309;
+}

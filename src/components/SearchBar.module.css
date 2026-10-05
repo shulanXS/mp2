@@ -1,0 +1,15 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.controls input {
+  flex: 1;
+  min-width: 180px;
+}
+
+.clearSearch {
+  flex-shrink: 0;
+}

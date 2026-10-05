@@ -1,0 +1,34 @@
+/* Tiles are square, so they fit a narrower column than the list's wide rows. */
+.list {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.card {
+  display: block;
+}
+
+.card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  background: #efe4d6;
+}
+
+.card:hover img {
+  outline: 2px solid #b4560f;
+}
+
+.name {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: block;
+  font-size: 0.75rem;
+  color: #7a6a5a;
+}
