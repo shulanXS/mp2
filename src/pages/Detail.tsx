@@ -74,8 +74,13 @@ export function Detail({ meals }: Props) {
     })
   }
 
-  if (error) return <p className={styles.error}>{error}</p>
-  if (!meal) return <p className={styles.loading}>Loading…</p>
+  if (error) return <p className={styles.emptyNote}>{error}</p>
+  if (!meal) return (
+    <p className="loading">
+      <span className="spinner" aria-hidden="true" /> Loading the recipe…
+    </p>
+  )
+
   const ingredients = Array.from({ length: 20 }, (_, i) => i + 1)
     .map((i) => ({
       name: meal[`strIngredient${i}`]?.trim(),
@@ -84,65 +89,68 @@ export function Detail({ meals }: Props) {
     .filter((x) => x.name)
     // Index in the key: a recipe can list the same ingredient twice with
     // different measures.
-    .map((x, i) => ({ ...x, key: `${x.name}-${i}`, idx: i + 1 }))
-
-  const tagList = (meal.strTags || '')
-    .split(',')
-    .map((t) => t.trim())
-    .filter(Boolean)
+    .map((x, i) => ({ ...x, key: `${x.name}-${i}` }))
 
   return (
     <article className={styles.detail}>
-      <nav className={styles.nav} aria-label="Meal navigation">
-        <button
-          className={styles.navBtn}
-          onClick={() => target(-1)}
-          disabled={index < 0}
-        >
-          ← Previous
-        </button>
-        <div className={styles.navMid}>
-          {index >= 0 && (
+      <nav className={styles.paginator} aria-label="Meal navigation">
+        <div className={styles.navGroup}>
+          <button
+            onClick={() => target(-1)}
+            disabled={index < 0}
+            className={`${styles.navBtn} ${styles.navBtnPrev}`}
+            aria-label="Previous meal"
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M7.5 2.5 3.5 6l4 3.5" />
+            </svg>
+            Previous
+          </button>
+          {index >= 0 && total > 0 && (
             <span className={styles.position}>
               <span className={styles.positionCurrent}>{index + 1}</span>
               <span className={styles.positionSep}>/</span>
-              <span className={styles.positionTotal}>
-                {String(total).padStart(2, '0')}
-              </span>
+              <span className={styles.positionTotal}>{total}</span>
             </span>
           )}
-          <Link
-            to={{
-              pathname: fromGallery ? '/gallery' : '/',
-              search: params.toString(),
-            }}
-            className={styles.back}
+          <button
+            onClick={() => target(1)}
+            disabled={index < 0}
+            className={styles.navBtn}
+            aria-label="Next meal"
           >
-            ← Back to {fromGallery ? 'gallery' : 'list'}
-          </Link>
+            Next
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M4.5 2.5 8.5 6l-4 3.5" />
+            </svg>
+          </button>
         </div>
-        <button
-          className={styles.navBtn}
-          onClick={() => target(1)}
-          disabled={index < 0}
+        <Link
+          to={{
+            pathname: fromGallery ? '/gallery' : '/',
+            search: params.toString(),
+          }}
+          className={styles.back}
         >
-          Next →
-        </button>
+          ← Back to {fromGallery ? 'gallery' : 'list'}
+        </Link>
       </nav>
 
       <div className={styles.body}>
         <figure className={styles.figure}>
-          <img src={meal.strMealThumb} alt={meal.strMeal} />
+          <div className={styles.figureFrame}>
+            <img src={meal.strMealThumb} alt={meal.strMeal} />
+          </div>
           <figcaption className={styles.figureCaption}>
-            <span>{meal.strMeal}</span>
-            <span>01 / 0{ingredients.length || 1}</span>
+            <span>{meal.idMeal}</span>
+            <span><strong>Recipe</strong> · 01</span>
           </figcaption>
           {meal.strYoutube && (
             <a
-              className={styles.youtube}
               href={meal.strYoutube}
               target="_blank"
               rel="noreferrer"
+              className={styles.youtube}
             >
               Watch on YouTube
             </a>
@@ -150,39 +158,35 @@ export function Detail({ meals }: Props) {
         </figure>
 
         <div className={styles.recipe}>
-          <header>
-            <h1>{meal.strMeal}</h1>
-            {tagList.length > 0 && (
-              <ul className={styles.tags}>
-                {tagList.map((t) => (
-                  <li key={t}>{t}</li>
-                ))}
-              </ul>
-            )}
+          <header className={styles.titleBlock}>
+            <span className={styles.titleEyebrow}>The recipe</span>
+            <h1 className={styles.title}>{meal.strMeal}</h1>
           </header>
 
           <dl className={styles.meta}>
-            <div>
-              <dt>Category</dt>
-              <dd>{meal.strCategory || NOT_RECORDED}</dd>
+            <div className={styles.metaRow}>
+              <dt className={styles.metaLabel}>Category</dt>
+              <dd className={styles.metaValue}>{meal.strCategory || NOT_RECORDED}</dd>
             </div>
-            <div>
-              <dt>Area</dt>
-              <dd>{meal.strArea || NOT_RECORDED}</dd>
+            <div className={styles.metaRow}>
+              <dt className={styles.metaLabel}>Area</dt>
+              <dd className={styles.metaValue}>{meal.strArea || NOT_RECORDED}</dd>
             </div>
-            <div>
-              <dt>Tags</dt>
-              <dd>{meal.strTags || '—'}</dd>
+            <div className={styles.metaRow}>
+              <dt className={styles.metaLabel}>Tags</dt>
+              <dd className={styles.metaValue}>
+                {meal.strTags ? meal.strTags : <span className={styles.metaMuted}>—</span>}
+              </dd>
             </div>
-            <div>
-              <dt>Source</dt>
-              <dd>
+            <div className={styles.metaRow}>
+              <dt className={styles.metaLabel}>Source</dt>
+              <dd className={styles.metaValue}>
                 {meal.strSource ? (
                   <a href={meal.strSource} target="_blank" rel="noreferrer">
                     {sourceLabel(meal.strSource)}
                   </a>
                 ) : (
-                  '—'
+                  <span className={styles.metaMuted}>—</span>
                 )}
               </dd>
             </div>
@@ -191,9 +195,7 @@ export function Detail({ meals }: Props) {
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>
               <span>Ingredients</span>
-              <span className={styles.sectionCount}>
-                {String(ingredients.length).padStart(2, '0')} items
-              </span>
+              <span className={styles.sectionCount}>{String(ingredients.length).padStart(2, '0')}</span>
             </h2>
             {ingredients.length > 0 ? (
               <ul className={styles.ingredients}>
@@ -201,12 +203,7 @@ export function Detail({ meals }: Props) {
                   <li key={x.key}>
                     <span className={styles.checkbox} aria-hidden="true" />
                     <span className={styles.ingName}>{x.name}</span>
-                    {x.measure && (
-                      <span className={styles.measure}>— {x.measure}</span>
-                    )}
-                    <span className={styles.ingIndex}>
-                      {String(x.idx).padStart(2, '0')}
-                    </span>
+                    {x.measure && <span className={styles.measure}>{x.measure}</span>}
                   </li>
                 ))}
               </ul>
@@ -217,12 +214,12 @@ export function Detail({ meals }: Props) {
 
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>
-              <span>Instructions</span>
-              <span className={styles.sectionHint}>read top to bottom</span>
+              <span>Method</span>
+              <span className={styles.sectionCount}>
+                {formatInstructions(meal.strInstructions).split('\n\n').length} steps
+              </span>
             </h2>
-            <p className={styles.instructions}>
-              {formatInstructions(meal.strInstructions)}
-            </p>
+            <p className={styles.instructions}>{formatInstructions(meal.strInstructions)}</p>
           </section>
         </div>
       </div>

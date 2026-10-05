@@ -1,24 +1,25 @@
 .list {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   counter-reset: meal;
-  position: relative;
 }
 
 /* ---------------------------------------------------------------------------
- * Row — a flat ink-on-paper card. The number prefix is a quiet cue that this
- * is part of a sequence; on hover the entire row warms up slightly.
+ * Row — a flat ink-on-paper card with a quiet numerical prefix and a thin
+ * inner ring on hover. The card never lifts dramatically; hover deepens the
+ * border and shows the meta tags in accent color, like a flag being placed.
  * ------------------------------------------------------------------------- */
 .row {
   position: relative;
   display: flex;
-  gap: 0.95rem;
+  gap: 1rem;
   align-items: center;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 0.85rem 0.95rem 0.85rem 0.95rem;
+  padding: 0.85rem 1rem 0.85rem 1.25rem;
   height: 100%;
   color: inherit;
+  overflow: hidden;
   transition:
     border-color var(--t-fast),
     background var(--t-fast),
@@ -26,53 +27,52 @@
     box-shadow var(--t-fast);
 }
 
-/* Vertical hairline at the row's left, like a typeset margin mark. */
+/* Accent hairline on the left — only visible on hover. */
 .row::after {
   content: '';
   position: absolute;
   left: 0;
-  top: 18%;
-  bottom: 18%;
+  top: 0;
+  bottom: 0;
   width: 2px;
-  background: var(--color-border);
-  border-radius: 2px;
-  transition: background var(--t-fast);
+  background: var(--color-accent);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform var(--t-base);
 }
 
+/* Quiet counter prefix in the upper-left corner. */
 .row::before {
   content: counter(meal, decimal-leading-zero);
   counter-increment: meal;
   position: absolute;
-  top: -8px;
-  left: 10px;
+  top: 0.6rem;
+  left: 0.6rem;
   font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.62rem;
   color: var(--color-text-faint);
   letter-spacing: 0.08em;
   pointer-events: none;
-  background: var(--color-bg);
-  padding: 0 0.3rem;
 }
 
 .row:hover {
   border-color: var(--color-text);
-  background: var(--color-surface-2);
+  background: var(--color-surface);
   text-decoration: none;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
 }
 
-.row:hover::after { background: var(--color-accent); }
+.row:hover::after { transform: scaleY(1); }
 
 .row img {
-  width: 68px;
-  height: 68px;
+  width: 72px;
+  height: 72px;
   object-fit: cover;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
-  background: var(--color-border);
-  border: 1px solid var(--color-border);
-  transition: transform var(--t-base);
+  background: var(--color-surface-3);
+  transition: transform var(--t-slow);
 }
 
 .row:hover img {
@@ -83,26 +83,24 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
-  padding-left: 0.15rem;
+  gap: 0.25rem;
+  flex: 1;
 }
 
 .row h2 {
-  font-size: var(--fs-base);
-  font-weight: 600;
+  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  font-size: var(--fs-md);
+  font-weight: 500;
   overflow-wrap: anywhere;
   color: var(--color-text);
-  line-height: 1.3;
-}
-
-.row:hover h2 {
-  color: var(--color-accent-hover);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 .rowMeta {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   font-size: var(--fs-xs);
   color: var(--color-text-muted);
   letter-spacing: 0.02em;
@@ -117,5 +115,41 @@
 }
 
 .row:hover .rowDot {
+  background: var(--color-mark);
+}
+
+/* "Read →" affordance that appears in the upper-right on hover. */
+.rowArrow {
+  align-self: center;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: translate(-4px, 0);
+  transition:
+    opacity var(--t-base),
+    transform var(--t-base),
+    background var(--t-fast),
+    color var(--t-fast),
+    border-color var(--t-fast);
+  flex-shrink: 0;
+}
+
+.row:hover .rowArrow {
+  opacity: 1;
+  transform: translate(0, 0);
   background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+@media (max-width: 540px) {
+  .row { padding: 0.75rem 0.85rem 0.75rem 1rem; }
+  .row img { width: 60px; height: 60px; }
 }

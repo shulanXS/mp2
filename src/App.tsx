@@ -19,36 +19,26 @@ export default function App() {
         <h1 className={styles.brand}>
           <Link to="/" className={styles.brandLink}>
             <span className={styles.brandMark} aria-hidden="true">
-              <svg viewBox="0 0 36 36" width="36" height="36" focusable="false">
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="14"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeDasharray="2 2.5"
-                  opacity="0.55"
-                />
-                <path
-                  d="M18 8 V18 L26 22"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                />
-                <circle cx="18" cy="18" r="2.2" fill="currentColor" />
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="13" r="7" />
+                <circle cx="12" cy="13" r="3.6" stroke="currentColor" strokeOpacity="0.5" strokeWidth="1" />
+                <path d="M9.2 6 L9.2 11.5" />
+                <path d="M14.8 6 L14.8 11.5" />
+                <path d="M8.4 6 L8.4 8.5" />
+                <path d="M10 6 L10 8.5" />
+                <path d="M14 6 L14 8.5" />
+                <path d="M15.6 6 L15.6 8.5" />
               </svg>
             </span>
             <span className={styles.brandText}>
-              <span className={styles.brandTitle}>The Meal DB</span>
-              <span className={styles.brandSub}>curated · catalog · cooked</span>
+              <span className={styles.brandTitle}>Table</span>
+              <span className={styles.brandSub}>a small meal directory</span>
             </span>
           </Link>
         </h1>
         <nav className={styles.nav} aria-label="Main">
           <NavLink to="/" end>
-            List
+            Index
           </NavLink>
           <NavLink to="/gallery">Gallery</NavLink>
         </nav>
@@ -56,40 +46,32 @@ export default function App() {
 
       {message && (
         <div className={styles.error} role="alert">
-          <p>{message}</p>
+          <div>
+            <p className={styles.errorTitle}>We couldn’t load this section</p>
+            <p className={styles.errorBody}>{message}</p>
+          </div>
           <button onClick={tryAgain}>Try again</button>
         </div>
       )}
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <List meals={meals} categories={categories} loading={loading} />
-          }
-        />
-        <Route
-          path="/gallery"
-          element={
-            <Gallery meals={meals} categories={categories} loading={loading} />
-          }
-        />
-        <Route path="/detail/:id" element={<Detail meals={meals} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-
-      <footer className="siteFooter">
-        <span className="siteFooterBrand">
-          <span className="siteFooterDot" aria-hidden="true" />
-          The Meal DB
-        </span>
-        <span>
-          Data from{' '}
-          <a href="https://www.themealdb.com" target="_blank" rel="noreferrer">
-            themealdb.com
-          </a>
-        </span>
-      </footer>
+      <main className={styles.main}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <List meals={meals} categories={categories} loading={loading} />
+            }
+          />
+          <Route
+            path="/gallery"
+            element={
+              <Gallery meals={meals} categories={categories} loading={loading} />
+            }
+          />
+          <Route path="/detail/:id" element={<Detail meals={meals} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
     </div>
   )
 }

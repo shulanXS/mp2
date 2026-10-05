@@ -3,12 +3,23 @@ import styles from './NotFound.module.css'
 
 export function NotFound() {
   return (
-    <div className={styles.wrap}>
-      <h2>Page not found</h2>
-      <p>That address does not match anything in this app.</p>
-      <Link to="/" className={styles.home}>
-        ← Back to the list
-      </Link>
-    </div>
+    <section className={styles.wrap}>
+      <p className={styles.eyebrow}>Error 404</p>
+      <h2 className={styles.title}>
+        We can’t find that <em>page.</em>
+      </h2>
+      <p className={styles.body}>
+        The address you followed doesn’t match anything in this directory.
+        It may have been moved, renamed, or simply never existed.
+      </p>
+      <div className={styles.actions}>
+        <Link to="/" className={styles.home}>
+          ← Back to the index
+        </Link>
+        <Link to="/gallery" className={styles.alt}>
+          Try the gallery →
+        </Link>
+      </div>
+    </section>
   )
 }

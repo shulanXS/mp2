@@ -11,12 +11,32 @@ export function SortBar() {
   const toggle = () => setOrder(direction === 'asc' ? 'desc' : 'asc')
 
   return (
-    <div className={styles.sortBar}>
-      <span className={styles.sortLabel}>Sort</span>
+    <div className={styles.wrap}>
+      <div className={styles.header}>
+        <span className={styles.label}>Sort</span>
+        <button
+          type="button"
+          className={styles.orderToggle}
+          onClick={toggle}
+          aria-label={`Sort order: ${direction === 'asc' ? 'ascending' : 'descending'}. Activate to switch.`}
+          title={
+            direction === 'asc'
+              ? 'Currently ascending. Activate to sort descending.'
+              : 'Currently descending. Activate to sort ascending.'
+          }
+        >
+          <span className={styles.arrow} aria-hidden="true">
+            {direction === 'asc' ? '↑' : '↓'}
+          </span>
+          <span>{direction === 'asc' ? 'Ascending' : 'Descending'}</span>
+        </button>
+      </div>
+
       <div className={styles.sortChips} role="group" aria-label="Sort by">
         {SORT_KEYS.map((k) => (
           <button
             key={k}
+            type="button"
             className={`${styles.sortChip} ${active === k ? styles.sortChipOn : ''}`}
             onClick={() => setSortKey(k)}
             aria-pressed={active === k}
@@ -25,19 +45,6 @@ export function SortBar() {
           </button>
         ))}
       </div>
-      <button
-        className={styles.orderToggle}
-        onClick={toggle}
-        aria-label={`Sort order: ${direction === 'asc' ? 'ascending' : 'descending'}. Activate to switch.`}
-        title={
-          direction === 'asc'
-            ? 'Currently ascending. Activate to sort descending.'
-            : 'Currently descending. Activate to sort ascending.'
-        }
-      >
-        <span aria-hidden="true">{direction === 'asc' ? '↑' : '↓'}</span>{' '}
-        {direction === 'asc' ? 'Ascending' : 'Descending'}
-      </button>
     </div>
   )
 }

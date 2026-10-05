@@ -32,16 +32,16 @@ export function List({ meals, categories, loading }: Props) {
               <div className={styles.rowText}>
                 <h2>{m.strMeal}</h2>
                 <p className={styles.rowMeta}>
-                  <span className={styles.rowDot} aria-hidden="true" />
-                  {m.strCategory || NOT_RECORDED}
-                  {m.strArea && m.strArea !== m.strCategory ? (
+                  <span>{m.strCategory || NOT_RECORDED}</span>
+                  {m.strArea && m.strArea !== m.strCategory && (
                     <>
                       <span className={styles.rowDot} aria-hidden="true" />
-                      {m.strArea}
+                      <span>{m.strArea}</span>
                     </>
-                  ) : null}
+                  )}
                 </p>
               </div>
+              <span className={styles.rowArrow} aria-hidden="true">→</span>
             </Link>
           </li>
         ))

@@ -30,15 +30,24 @@ export function Gallery({ meals, categories, loading }: Props) {
             >
               <div className={styles.frame}>
                 <img src={m.strMealThumb} alt="" loading="lazy" />
-                <span className={styles.view} aria-hidden="true">↗</span>
-              </div>
-              <span className={styles.caption}>
-                <span className={styles.name}>{m.strMeal}</span>
-                <span className={styles.meta}>
-                  <span className={styles.metaDot} aria-hidden="true" />
-                  {m.strCategory || NOT_RECORDED}
+                <span className={styles.veil} aria-hidden="true" />
+                <span className={styles.view} aria-hidden="true">
+                  View
+                  <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 9 9 3" />
+                    <path d="M5 3h4v4" />
+                  </svg>
                 </span>
-              </span>
+                <div className={styles.caption}>
+                  <span className={styles.name}>{m.strMeal}</span>
+                  <span className={styles.meta}>
+                    <span className={styles.metaDot} aria-hidden="true" />
+                    {m.strCategory || (
+                      <span className={styles.metaMuted}>{NOT_RECORDED}</span>
+                    )}
+                  </span>
+                </div>
+              </div>
             </Link>
           </li>
         ))

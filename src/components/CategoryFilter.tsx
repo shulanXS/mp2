@@ -11,9 +11,22 @@ export function CategoryFilter({ categories }: Props) {
 
   return (
     <div className={styles.wrap}>
-      <p className={styles.barLabel}>Filter by category</p>
+      <div className={styles.header}>
+        <span className={styles.label}>Categories</span>
+        {selected.length > 0 && (
+          <button
+            type="button"
+            className={styles.clear}
+            onClick={clear}
+            aria-label="Clear category filter"
+          >
+            Clear ({selected.length})
+          </button>
+        )}
+      </div>
       <div className={styles.bar} role="group" aria-label="Filter by category">
         <button
+          type="button"
           className={`${styles.chip} ${selected.length === 0 ? styles.on : ''}`}
           onClick={() => toggle('')}
           aria-pressed={selected.length === 0}
@@ -25,6 +38,7 @@ export function CategoryFilter({ categories }: Props) {
           return (
             <button
               key={name}
+              type="button"
               className={`${styles.chip} ${on ? styles.on : ''}`}
               onClick={() => toggle(name)}
               aria-pressed={on}
@@ -36,15 +50,10 @@ export function CategoryFilter({ categories }: Props) {
       </div>
       <p className={styles.status}>
         {selected.length === 0
-          ? 'Showing all categories'
+          ? 'Showing every category'
           : selected.length === 1
             ? `Showing ${selected[0]}`
             : `Showing ${selected.length} categories: ${selected.join(', ')}`}
-        {selected.length > 0 && (
-          <button className={styles.clear} onClick={clear} aria-label="Clear category filter">
-            Clear
-          </button>
-        )}
       </p>
     </div>
   )

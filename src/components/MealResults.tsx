@@ -4,6 +4,7 @@ import { SearchBar } from './SearchBar'
 import { SortBar } from './SortBar'
 import { useDebouncedQueryParam, useVisibleMeals } from '../useVisibleMeals'
 import type { MealSummary } from '../types'
+import styles from './MealResults.module.css'
 
 type Props = {
   meals: MealSummary[]
@@ -27,41 +28,68 @@ export function MealResults({
   const visible = useVisibleMeals(meals)
   const trimmed = urlQuery.trim()
   const searching = trimmed.length > 0
+
   return (
-    <div>
-      <SearchBar />
-      <CategoryFilter categories={categories} />
-      <SortBar />
+    <section className={styles.shell}>
+      <header className={styles.intake}>
+        <div className={styles.intakeText}>
+          <p className={styles.eyebrow}>
+            <span className={styles.eyebrowDot} aria-hidden="true" />
+            {searching ? 'Refining' : 'Browsing'} the index
+          </p>
+          <h2 className={styles.headline}>
+            {searching ? (
+              <>
+                Meals matching{' '}
+                <span className={styles.headlineMark}>“{trimmed}”</span>
+              </>
+            ) : (
+              <>What will you cook next?</>
+            )}
+          </h2>
+          <p className={styles.lede}>
+            Search, sort, and filter through {meals.length} curated dishes from
+            TheMealDB. Tap any name to read the full method.
+          </p>
+        </div>
+
+        <div className={styles.controls}>
+          <SearchBar />
+          <CategoryFilter categories={categories} />
+          <SortBar />
+        </div>
+      </header>
 
       {!loading && visible.length > 0 && (
         <p className="count">
-          <strong>{String(visible.length).padStart(2, '0')}</strong>
-          <span>{visible.length === 1 ? 'meal' : 'meals'}</span>
-          {searching && (
-            <span className="countQuery">matching “{trimmed}”</span>
-          )}
+          <strong>{visible.length}</strong>
+          {visible.length === 1 ? 'meal' : 'meals'}
+          {searching ? ` for “${trimmed}”` : ' in view'}
         </p>
       )}
 
       {loading ? (
-        <div className="loading">
-          <span className="spinner" aria-hidden="true" />
-          <span>Loading meals…</span>
-        </div>
+        <p className="loading">
+          <span className="spinner" aria-hidden="true" /> Loading the index…
+        </p>
       ) : visible.length === 0 ? (
         <div className="empty">
           <p className="emptyTitle">
-            {searching ? `No meals match “${trimmed}”` : 'No meals to show'}
+            {searching
+              ? `Nothing matched “${trimmed}”`
+              : 'No meals to show'}
           </p>
           <p className="emptyHint">
             {searching
-              ? 'Try a shorter keyword or clear the search.'
-              : 'Adjust your filters above to bring meals back.'}
+              ? 'Try a shorter query, clear a filter, or reset to the full list.'
+              : 'Once the data arrives, dishes will appear here.'}
           </p>
           {searching && (
-            <button className="linkButton" onClick={() => setLocal('')}>
-              Show all meals
-            </button>
+            <p>
+              <button className="linkButton" onClick={() => setLocal('')}>
+                Show all meals
+              </button>
+            </p>
           )}
         </div>
       ) : (
@@ -69,6 +97,6 @@ export function MealResults({
           {renderItems(visible)}
         </ul>
       )}
-    </div>
+    </section>
   )
 }
