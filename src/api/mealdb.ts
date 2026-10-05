@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { NOT_RECORDED } from '../types'
 import type { Meal, MealSummary } from '../types'
 
 const BASE = 'https://www.themealdb.com/api/json/v1/1'
@@ -15,12 +14,13 @@ const list = (v: Raw['meals']): Meal[] => (Array.isArray(v) ? v : [])
 const or = (v: string | null | undefined, fallback: string): string =>
   v?.trim() || fallback
 
-// strArea and strTags are often null/empty in the API; normalize once here.
+// strArea is not in any "list" endpoint — it has to be fetched per-meal
+// (Detail page does that). On the index, strArea stays empty.
+// strCategory is left untouched so the rendering layer can detect missing
+// data (showing "Not recorded" everywhere hides real gaps).
 const normalize = (m: Meal): Meal => ({
   ...m,
   strMeal: or(m.strMeal, 'Untitled'),
-  strArea: or(m.strArea, NOT_RECORDED),
-  strCategory: or(m.strCategory, NOT_RECORDED),
   strTags: or(m.strTags, ''),
   strInstructions: or(m.strInstructions, 'No instructions provided.'),
 })
@@ -30,7 +30,7 @@ export async function fetchCategories(): Promise<string[]> {
   return (data.categories ?? []).map((c) => c.strCategory).filter(Boolean)
 }
 
-// search.php?f=<letter> populates strArea and strCategory that filter.php omits.
+// search.php?f=<letter> gives every meal with strCategory populated.
 async function fetchByLetter(letter: string): Promise<Meal[]> {
   const { data } = await client.get<Raw>('/search.php', { params: { f: letter } })
   return list(data.meals).map(normalize)

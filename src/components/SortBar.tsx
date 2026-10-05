@@ -12,37 +12,37 @@ export function SortBar() {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.row}>
+      <div className={styles.field}>
         <span className={styles.label}>Sort</span>
-        <button
-          type="button"
-          className={styles.orderToggle}
-          onClick={toggle}
-          aria-label={`Sort order: ${direction === 'asc' ? 'ascending' : 'descending'}. Activate to switch.`}
-          title={
-            direction === 'asc'
-              ? 'Currently ascending. Activate to sort descending.'
-              : 'Currently descending. Activate to sort ascending.'
-          }
-        >
-          <span className={styles.arrow} aria-hidden="true">
-            {direction === 'asc' ? '↑' : '↓'}
-          </span>
-          <span>{direction === 'asc' ? 'Asc' : 'Desc'}</span>
-        </button>
-      </div>
-      <div className={styles.sortChips} role="group" aria-label="Sort by">
-        {SORT_KEYS.map((k) => (
+        <div className={styles.sortChips} role="group" aria-label="Sort by">
+          {SORT_KEYS.map((k) => (
+            <button
+              key={k}
+              type="button"
+              className={`${styles.sortChip} ${active === k ? styles.sortChipOn : ''}`}
+              onClick={() => setSortKey(k)}
+              aria-pressed={active === k}
+            >
+              {SORT_LABELS[k]}
+            </button>
+          ))}
           <button
-            key={k}
             type="button"
-            className={`${styles.sortChip} ${active === k ? styles.sortChipOn : ''}`}
-            onClick={() => setSortKey(k)}
-            aria-pressed={active === k}
+            className={styles.orderToggle}
+            onClick={toggle}
+            aria-label={`Sort order: ${direction === 'asc' ? 'ascending' : 'descending'}. Activate to switch.`}
+            title={
+              direction === 'asc'
+                ? 'Currently ascending. Activate to sort descending.'
+                : 'Currently descending. Activate to sort ascending.'
+            }
           >
-            {SORT_LABELS[k]}
+            <span aria-hidden="true">{direction === 'asc' ? '↑' : '↓'}</span>
+            <span className={styles.orderText}>
+              {direction === 'asc' ? 'Asc' : 'Desc'}
+            </span>
           </button>
-        ))}
+        </div>
       </div>
     </div>
   )

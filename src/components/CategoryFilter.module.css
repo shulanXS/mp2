@@ -1,16 +1,14 @@
 .wrap {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  min-width: 0;
+  gap: 0.5rem;
 }
 
-.row {
+.header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
-  min-height: 1.6rem;
 }
 
 .label {

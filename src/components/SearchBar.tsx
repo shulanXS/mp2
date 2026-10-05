@@ -10,9 +10,6 @@ export function SearchBar() {
 
   return (
     <div className={styles.wrap}>
-      <label className={styles.label} htmlFor="meal-search">
-        Search
-      </label>
       <div className={styles.field}>
         <svg
           className={styles.icon}
@@ -34,7 +31,7 @@ export function SearchBar() {
           ref={inputRef}
           type="text"
           className={styles.input}
-          placeholder="Try “carbonara”, “thai”, “cake”…"
+          placeholder="Search meals…"
           value={local}
           onChange={(e) => setLocal(e.target.value)}
           aria-label="Search meals"

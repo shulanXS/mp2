@@ -1,27 +1,19 @@
 .shell {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 /* ---------------------------------------------------------------------------
- * Intro — short headline at the top of every list/gallery page. No card
- * border, no separate container; it sits as the first flow element so the
- * page reads as a single continuous column.
+ * Intro — a single short headline + one line of context. No decorative
+ * eyebrow, no separate "hero" block: the page is a control bar and then the
+ * results.
  * ------------------------------------------------------------------------- */
 .intro {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding: 0.5rem 0 0.25rem;
-}
-
-.eyebrow {
-  font-size: var(--fs-xs);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  font-weight: 500;
+  gap: 0.35rem;
+  padding-top: 0.25rem;
 }
 
 .headline {
@@ -41,47 +33,38 @@
   .headline { font-size: var(--fs-2xl); }
 }
 
+.lede {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  max-width: 56ch;
+}
+
 /* ---------------------------------------------------------------------------
- * Controls — three cells on a single row: search, categories, sort. Each
- * cell has its own label and field; the cells share a thin top hairline so
- * the row reads as a control bar without a heavy card container.
- *
- * Wide screens: search takes the available width, categories wrap, sort
- * drops to its own row. Narrow screens: each cell stacks full-width.
+ * Toolbar — search (flex-grow) and sort (fixed-width). On narrow screens
+ * they stack. Separated from the headline by a single hairline.
  * ------------------------------------------------------------------------- */
-.controls {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.85rem;
-  padding-top: 0.85rem;
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1rem;
   border-top: var(--hairline-strong);
 }
 
-.searchCell { min-width: 0; }
-.chipsCell { min-width: 0; }
-.sortCell { min-width: 0; }
-
-/* The three cells have different internal shapes (one input row, one chips
- * row, one row+chips). To keep the labels aligned across cells, pin each
- * cell's first child to the same height. */
-.searchCell > *:first-child,
-.chipsCell > *:first-child,
-.sortCell > *:first-child {
-  min-height: 1.6rem;
-}
-
 @media (min-width: 720px) {
-  .controls {
-    grid-template-columns: minmax(260px, 1.2fr) minmax(0, 1.8fr) auto;
+  .toolbar {
+    flex-direction: row;
     align-items: end;
     gap: 1.25rem;
   }
-  .sortCell { justify-self: end; }
+  .toolbar > :first-child { flex: 1 1 auto; min-width: 0; }
+  .toolbar > :last-child { flex: 0 0 auto; }
 }
 
-/* Result count — sits right under the controls with a small gap. */
+/* Result count. */
 .count {
-  margin: 0.25rem 0 0;
+  margin: 0;
   font-size: var(--fs-xs);
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;

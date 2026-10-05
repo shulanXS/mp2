@@ -1,6 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { MealResults } from '../components/MealResults'
-import { NOT_RECORDED } from '../types'
 import type { MealSummary } from '../types'
 import styles from './Gallery.module.css'
 
@@ -39,12 +38,12 @@ export function Gallery({ meals, categories, loading }: Props) {
                 </span>
                 <div className={styles.caption}>
                   <span className={styles.name}>{m.strMeal}</span>
-                  <span className={styles.meta}>
-                    <span className={styles.metaDot} aria-hidden="true" />
-                    {m.strCategory || (
-                      <span className={styles.metaMuted}>{NOT_RECORDED}</span>
-                    )}
-                  </span>
+                  {m.strCategory && (
+                    <span className={styles.meta}>
+                      <span className={styles.metaDot} aria-hidden="true" />
+                      {m.strCategory}
+                    </span>
+                  )}
                 </div>
               </div>
             </Link>

@@ -11,7 +11,7 @@ export function CategoryFilter({ categories }: Props) {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.row}>
+      <div className={styles.header}>
         <span className={styles.label}>Categories</span>
         {selected.length > 0 && (
           <button

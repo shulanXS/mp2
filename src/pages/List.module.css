@@ -1,9 +1,9 @@
 .list {
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
 /* Row — flat card. Hover deepens the border and reveals a thin accent rule
- * on the left; the right-arrow appears in the corner. No decorative numbers. */
+ * on the left; the right-arrow appears in the corner. */
 .row {
   position: relative;
   display: flex;
@@ -65,7 +65,7 @@
   flex: 1;
 }
 
-.row h2 {
+.rowTitle {
   font-size: var(--fs-md);
   font-weight: 600;
   overflow-wrap: anywhere;
@@ -74,23 +74,10 @@
 }
 
 .rowMeta {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   font-size: var(--fs-xs);
   color: var(--color-text-muted);
   letter-spacing: 0.02em;
 }
-
-.rowDot {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--color-border-strong);
-  display: inline-block;
-}
-
-.row:hover .rowDot { background: var(--color-accent); }
 
 .rowArrow {
   align-self: center;

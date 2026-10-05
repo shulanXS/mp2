@@ -1,6 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { MealResults } from '../components/MealResults'
-import { NOT_RECORDED } from '../types'
 import type { MealSummary } from '../types'
 import styles from './List.module.css'
 
@@ -30,16 +29,10 @@ export function List({ meals, categories, loading }: Props) {
             >
               <img src={m.strMealThumb} alt="" loading="lazy" />
               <div className={styles.rowText}>
-                <h2>{m.strMeal}</h2>
-                <p className={styles.rowMeta}>
-                  <span>{m.strCategory || NOT_RECORDED}</span>
-                  {m.strArea && m.strArea !== m.strCategory && (
-                    <>
-                      <span className={styles.rowDot} aria-hidden="true" />
-                      <span>{m.strArea}</span>
-                    </>
-                  )}
-                </p>
+                <h2 className={styles.rowTitle}>{m.strMeal}</h2>
+                {m.strCategory && (
+                  <p className={styles.rowMeta}>{m.strCategory}</p>
+                )}
               </div>
               <span className={styles.rowArrow} aria-hidden="true">→</span>
             </Link>
