@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { fetchAllMeals, fetchCategories } from './mealdb'
 import type { MealSummary } from '../types'
 
-// The catalogue is fetched once (one request per category) and filtered in memory.
-// The promise is cached at module scope and dropped on failure so retry() works.
+// The catalogue is fetched once across all 26 letters in parallel, so every
+// meal has a real strCategory and strArea from the start. The promise is
+// cached at module scope and dropped on failure so retry() really retries.
 let allPromise: Promise<MealSummary[]> | null = null
 
 export function useCategories() {
@@ -37,7 +38,6 @@ export function useCategories() {
 }
 
 export function useMeals(
-  categories: string[],
   selected: string,
   // The catalogue cannot load without categories.
   categoriesFailed = false,
@@ -48,9 +48,8 @@ export function useMeals(
   const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
-    if (!categories.length) return
     let alive = true
-    allPromise ??= fetchAllMeals(categories)
+    allPromise ??= fetchAllMeals()
     allPromise
       .then((meals) => {
         if (!alive) return
@@ -64,7 +63,7 @@ export function useMeals(
     return () => {
       alive = false
     }
-  }, [categories, attempt])
+  }, [attempt])
 
   const retry = useCallback(() => {
     allPromise = null
@@ -77,7 +76,6 @@ export function useMeals(
   if (categoriesFailed) {
     return { meals: [] as MealSummary[], loading: false, error: 'Failed to load categories.', retry }
   }
-  if (!categories.length) return { meals: [] as MealSummary[], loading: true, error, retry }
   if (!all) return { meals: [], loading: true, error, retry }
 
   const meals = selected ? all.filter((m) => m.strCategory === selected) : all

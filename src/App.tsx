@@ -10,7 +10,7 @@ export default function App() {
   const [params] = useSearchParams()
   const cat = params.get('cat') ?? ''
   const { categories, error: catError, retry: retryCategories } = useCategories()
-  const { meals, loading, error, retry } = useMeals(categories, cat, !!catError)
+  const { meals, loading, error, retry } = useMeals(cat, !!catError)
 
   // Retry whichever half failed: the catalogue fetch is gated on categories.
   const tryAgain = catError ? retryCategories : retry

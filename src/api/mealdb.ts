@@ -31,24 +31,33 @@ export async function fetchCategories(): Promise<string[]> {
   return (data.categories ?? []).map((c) => c.strCategory).filter(Boolean)
 }
 
-export async function fetchByCategory(category: string): Promise<MealSummary[]> {
-  const { data } = await client.get<Raw>('/filter.php', { params: { c: category } })
-  // filter.php omits strCategory, so the requested category fills it in.
-  return list(data.meals)
-    .map((m) => normalize({ ...m, strCategory: m.strCategory || category }))
-    .map(({ idMeal, strMeal, strMealThumb, strArea, strCategory }) => ({
+// search.php?f=<letter> returns one slice of the catalogue. Pulling every
+// letter a..z in parallel gives the whole list with every field populated;
+// this is what makes sorting by Area or Category actually differ from sorting
+// by Name, which the older filter.php endpoint (which omits strArea and
+// strCategory) could not.
+async function fetchByLetter(letter: string): Promise<Meal[]> {
+  const { data } = await client.get<Raw>('/search.php', { params: { f: letter } })
+  return list(data.meals).map(normalize)
+}
+
+const ALPHABET = 'abcdefghijklmnopqrstuvwxyz'.split('')
+
+export async function fetchAllMeals(): Promise<MealSummary[]> {
+  const lists = await Promise.all(ALPHABET.map(fetchByLetter))
+  const flat = lists.flat()
+  // A meal belongs to one category, but dedupe in case the API ever overlaps
+  // an id across letters.
+  const unique = Array.from(new Map(flat.map((m) => [m.idMeal, m])).values())
+  return unique.map(
+    ({ idMeal, strMeal, strMealThumb, strArea, strCategory }) => ({
       idMeal,
       strMeal,
       strMealThumb,
       strArea,
       strCategory,
-    }))
-}
-
-export async function fetchAllMeals(categories: string[]): Promise<MealSummary[]> {
-  const lists = await Promise.all(categories.map(fetchByCategory))
-  // A meal belongs to one category, but dedupe in case the API ever overlaps.
-  return Array.from(new Map(lists.flat().map((m) => [m.idMeal, m])).values())
+    }),
+  )
 }
 
 export async function fetchMeal(id: string): Promise<Meal> {
