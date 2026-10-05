@@ -1,27 +1,52 @@
 .shell {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 /* ---------------------------------------------------------------------------
- * Intro — a single short headline + one line of context. No decorative
- * eyebrow, no separate "hero" block: the page is a control bar and then the
- * results.
+ * Intro — the page-opening spread. Serif headline italic for the editorial
+ * feel, narrow kicker above (a chapter number / status line), lede below in
+ * the same serif at smaller size. Sits at the top of every list/gallery
+ * page and is the first thing the reader sees.
  * ------------------------------------------------------------------------- */
 .intro {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  padding-top: 0.25rem;
+  gap: 0.5rem;
+  padding: 0.25rem 0 0;
+  max-width: 64ch;
+}
+
+.kicker {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.kicker::before {
+  content: '';
+  width: 1.6rem;
+  height: 1px;
+  background: var(--color-text-muted);
 }
 
 .headline {
-  font-size: var(--fs-xl);
-  line-height: 1.15;
+  font-family: 'Source Serif 4', 'Iowan Old Style', 'Source Serif Pro', Georgia, serif;
+  font-size: clamp(2.2rem, 5.2vw, 3.4rem);
+  line-height: 1.04;
   letter-spacing: -0.02em;
-  font-weight: 600;
+  font-weight: 500;
+  font-style: italic;
   color: var(--color-text);
+  margin: 0.1rem 0 0.35rem;
+  max-width: 18ch;
 }
 
 .headline em {
@@ -29,15 +54,24 @@
   color: var(--color-accent);
 }
 
-@media (min-width: 720px) {
-  .headline { font-size: var(--fs-2xl); }
+.lede {
+  font-family: 'Source Serif 4', 'Iowan Old Style', 'Source Serif Pro', Georgia, serif;
+  font-size: var(--fs-md);
+  color: var(--color-text-2);
+  line-height: 1.55;
+  max-width: 56ch;
+  font-weight: 400;
+  margin: 0;
 }
 
-.lede {
-  font-size: var(--fs-sm);
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  max-width: 56ch;
+.lede strong {
+  font-weight: 600;
+  color: var(--color-text);
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .headline { max-width: 14ch; }
 }
 
 /* ---------------------------------------------------------------------------
@@ -48,7 +82,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding-top: 1rem;
+  padding-top: 1.25rem;
   border-top: var(--hairline-strong);
 }
 

@@ -32,18 +32,34 @@ export function MealResults({
   return (
     <section className={styles.shell}>
       <div className={styles.intro}>
+        <p className={styles.kicker}>
+          {searching ? <>Refining the index</> : <>A small meal directory</>}
+        </p>
+
         <h1 className={styles.headline}>
           {searching ? (
             <>
               Meals matching <em>“{trimmed}”</em>
             </>
           ) : (
-            <>The index</>
+            <>What will you cook next?</>
           )}
         </h1>
+
         <p className={styles.lede}>
-          {meals.length} dishes from TheMealDB — search, sort, and filter to
-          find something to cook.
+          {searching ? (
+            <>
+              The full index, filtered to anything that matches{' '}
+              <strong>“{trimmed}”</strong> in its name, cuisine, category,
+              or tags.
+            </>
+          ) : (
+            <>
+              A curated, hand-tested catalogue of dishes from TheMealDB.
+              Search by name or cuisine, sort by anything that catches your
+              eye, and tap any recipe for the full method.
+            </>
+          )}
         </p>
       </div>
 
@@ -58,7 +74,7 @@ export function MealResults({
         <p className={styles.count}>
           <strong>{visible.length}</strong>
           {visible.length === 1 ? 'meal' : 'meals'}
-          {searching ? ` for “${trimmed}”` : ''}
+          {searching ? ` for “${trimmed}”` : ' in view'}
         </p>
       )}
 
