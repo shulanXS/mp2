@@ -17,6 +17,7 @@ export default function App() {
     <div className={styles.app}>
       <header className={styles.header}>
         <h1 className={styles.brand}>
+          <span className={styles.brandIcon} aria-hidden="true">🍽</span>
           <Link to="/">The Meal DB</Link>
         </h1>
         <nav className={styles.nav} aria-label="Main">

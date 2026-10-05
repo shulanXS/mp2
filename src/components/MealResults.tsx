@@ -44,20 +44,28 @@ export function MealResults({
       )}
 
       {loading ? (
-        <p>Loading…</p>
+        <div className="loading" role="status" aria-live="polite">
+          <span className="spinner" aria-hidden="true" />
+          <span>Loading delicious meals…</span>
+        </div>
       ) : visible.length === 0 ? (
-        <p>
+        <div className="empty">
+          <span className="emptyIcon" aria-hidden="true">
+            {searching ? '🔍' : '🍽'}
+          </span>
+          <p className="emptyTitle">
+            {searching ? `No meals match “${trimmed}”` : 'No meals found'}
+          </p>
           {searching ? (
-            <>
-              No meals match “{trimmed}”.{' '}
+            <p className="emptyHint">
               <button className="linkButton" onClick={() => setLocal('')}>
                 Show all meals
               </button>
-            </>
+            </p>
           ) : (
-            'No meals found.'
+            <p className="emptyHint">Try clearing your filters.</p>
           )}
-        </p>
+        </div>
       ) : (
         <ul className={`${className} resultsGrid`} aria-label={label}>
           {renderItems(visible)}

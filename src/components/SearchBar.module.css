@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
   align-items: center;
 }
 
@@ -13,11 +13,44 @@
  * Safari. The class is still named .input so it is trivial to add the
  * WebKit cancel-button reset here later if the field type is ever changed.
  */
+.searchWrap {
+  position: relative;
+  flex: 1 1 240px;
+  min-width: 200px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-faint);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
 .input {
-  flex: 1 1 220px;
-  min-width: 180px;
+  width: 100%;
+  padding-left: 2.4rem;
+  background: var(--color-surface-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.input::placeholder {
+  color: var(--color-text-faint);
+  font-style: italic;
 }
 
 .clearSearch {
   flex-shrink: 0;
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent-soft);
+  color: var(--color-accent-hover);
+  font-weight: 500;
+}
+
+.clearSearch:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
 }

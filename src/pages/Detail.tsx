@@ -75,7 +75,13 @@ export function Detail({ meals }: Props) {
   }
 
   if (error) return <p className={styles.error}>{error}</p>
-  if (!meal) return <p>Loading…</p>
+  if (!meal)
+    return (
+      <div className={styles.detailLoading} role="status" aria-live="polite">
+        <span className={styles.detailSpinner} aria-hidden="true" />
+        <span>Loading recipe…</span>
+      </div>
+    )
   const ingredients = Array.from({ length: 20 }, (_, i) => i + 1)
     .map((i) => ({
       name: meal[`strIngredient${i}`]?.trim(),
@@ -142,7 +148,7 @@ export function Detail({ meals }: Props) {
               {ingredients.map((x) => (
                 <li key={x.key}>
                   {x.name}
-                  {x.measure ? ` — ${x.measure}` : ''}
+                  {x.measure ? <span className={styles.measure}> — {x.measure}</span> : ''}
                 </li>
               ))}
             </ul>

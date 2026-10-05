@@ -10,15 +10,18 @@ export function SearchBar() {
 
   return (
     <div className={styles.controls}>
-      <input
-        ref={inputRef}
-        type="text"
-        className={styles.input}
-        placeholder="Search meals..."
-        value={local}
-        onChange={(e) => setLocal(e.target.value)}
-        aria-label="Search meals"
-      />
+      <div className={styles.searchWrap}>
+        <span className={styles.searchIcon} aria-hidden="true">🔍</span>
+        <input
+          ref={inputRef}
+          type="text"
+          className={styles.input}
+          placeholder="Search meals..."
+          value={local}
+          onChange={(e) => setLocal(e.target.value)}
+          aria-label="Search meals"
+        />
+      </div>
       {hasText && (
         <button
           type="button"
@@ -29,7 +32,7 @@ export function SearchBar() {
           }}
           aria-label="Clear search"
         >
-          Clear
+          ✕ Clear
         </button>
       )}
     </div>

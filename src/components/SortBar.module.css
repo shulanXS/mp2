@@ -32,7 +32,40 @@
 /* Fixed width so flipping the direction does not shift the chips. */
 .orderToggle {
   margin-left: auto;
-  min-width: 8.5rem;
+  min-width: 9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, var(--color-accent-soft) 0%, var(--color-surface-raised) 100%);
+  border-color: var(--color-border-strong);
+  font-weight: 500;
+}
+
+.orderToggle:hover {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  border-color: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 2px 8px var(--color-accent-glow);
+}
+
+.orderArrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.orderToggle:hover .orderArrow {
+  background: #fff;
+  color: var(--color-accent-hover);
 }
 
 @media (max-width: 640px) {
