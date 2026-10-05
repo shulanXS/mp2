@@ -13,8 +13,8 @@
 }
 
 .chip:hover {
-  border-color: #b4560f;
-  color: #b4560f;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 .on {
@@ -22,28 +22,28 @@
 }
 
 .status {
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-  color: #7a6a5a;
+  margin-top: 0.55rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
 }
 
 .clear {
   border: 0;
   background: none;
   padding: 0;
-  color: #b4560f;
+  color: var(--color-accent);
   text-decoration: underline;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   cursor: pointer;
 }
 
 .clear:hover {
   background: none;
-  color: #8f4309;
+  color: var(--color-accent-hover);
 }
 
 @media (max-width: 640px) {

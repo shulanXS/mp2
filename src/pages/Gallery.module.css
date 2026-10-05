@@ -1,34 +1,46 @@
 /* Tiles are square, so they fit a narrower column than the list's wide rows. */
 .list {
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
 }
 
 .card {
   display: block;
+  border-radius: var(--radius);
+  transition: transform 0.15s;
+}
+
+.card:hover {
+  text-decoration: none;
 }
 
 .card img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: var(--radius);
   display: block;
-  background: #efe4d6;
+  background: var(--color-accent-soft);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.15s, transform 0.15s;
 }
 
 .card:hover img {
-  outline: 2px solid #b4560f;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .name {
   display: block;
-  font-size: 0.85rem;
-  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
   overflow-wrap: anywhere;
+  color: var(--color-text);
 }
 
 .meta {
   display: block;
-  font-size: 0.75rem;
-  color: #7a6a5a;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 0.15rem;
 }
