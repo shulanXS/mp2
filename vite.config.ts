@@ -13,8 +13,8 @@ function spaFallback(): Plugin {
   return {
     name: 'spa-404-fallback',
     closeBundle() {
-      const index = resolve(__dirname, 'dist/index.html')
-      if (existsSync(index)) copyFileSync(index, resolve(__dirname, 'dist/404.html'))
+      const index = resolve(import.meta.dirname, 'dist/index.html')
+      if (existsSync(index)) copyFileSync(index, resolve(import.meta.dirname, 'dist/404.html'))
     },
   }
 }
