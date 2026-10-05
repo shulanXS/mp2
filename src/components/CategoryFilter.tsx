@@ -11,6 +11,7 @@ export function CategoryFilter({ categories }: Props) {
 
   return (
     <div className={styles.wrap}>
+      <p className={styles.barLabel}>Filter by category</p>
       <div className={styles.bar} role="group" aria-label="Filter by category">
         <button
           className={`${styles.chip} ${selected.length === 0 ? styles.on : ''}`}

@@ -28,9 +28,17 @@ export function Gallery({ meals, categories, loading }: Props) {
               state={{ from: '/gallery' }}
               className={styles.card}
             >
-              <img src={m.strMealThumb} alt="" loading="lazy" />
-              <span className={styles.name}>{m.strMeal}</span>
-              <span className={styles.meta}>{m.strCategory || NOT_RECORDED}</span>
+              <div className={styles.frame}>
+                <img src={m.strMealThumb} alt="" loading="lazy" />
+                <span className={styles.view} aria-hidden="true">↗</span>
+              </div>
+              <span className={styles.caption}>
+                <span className={styles.name}>{m.strMeal}</span>
+                <span className={styles.meta}>
+                  <span className={styles.metaDot} aria-hidden="true" />
+                  {m.strCategory || NOT_RECORDED}
+                </span>
+              </span>
             </Link>
           </li>
         ))

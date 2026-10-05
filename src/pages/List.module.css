@@ -1,48 +1,94 @@
-/* Wide rows for the list view; gallery's CSS uses narrower columns. */
 .list {
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  counter-reset: meal;
+  position: relative;
 }
 
 /* ---------------------------------------------------------------------------
- * Row — flat card. Slightly raised tone vs. the body paper so the card
- * reads as "on top" without needing a shadow.
+ * Row — a flat ink-on-paper card. The number prefix is a quiet cue that this
+ * is part of a sequence; on hover the entire row warms up slightly.
  * ------------------------------------------------------------------------- */
 .row {
+  position: relative;
   display: flex;
-  gap: 0.9rem;
+  gap: 0.95rem;
   align-items: center;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 0.7rem 0.8rem;
+  padding: 0.85rem 0.95rem 0.85rem 0.95rem;
   height: 100%;
-  transition: border-color 0.12s, background 0.12s;
+  color: inherit;
+  transition:
+    border-color var(--t-fast),
+    background var(--t-fast),
+    transform var(--t-fast),
+    box-shadow var(--t-fast);
+}
+
+/* Vertical hairline at the row's left, like a typeset margin mark. */
+.row::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 2px;
+  background: var(--color-border);
+  border-radius: 2px;
+  transition: background var(--t-fast);
+}
+
+.row::before {
+  content: counter(meal, decimal-leading-zero);
+  counter-increment: meal;
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.62rem;
+  color: var(--color-text-faint);
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  background: var(--color-bg);
+  padding: 0 0.3rem;
 }
 
 .row:hover {
   border-color: var(--color-text);
+  background: var(--color-surface-2);
   text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
 }
 
+.row:hover::after { background: var(--color-accent); }
+
 .row img {
-  width: 64px;
-  height: 64px;
+  width: 68px;
+  height: 68px;
   object-fit: cover;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
   background: var(--color-border);
   border: 1px solid var(--color-border);
+  transition: transform var(--t-base);
+}
+
+.row:hover img {
+  transform: scale(1.04);
 }
 
 .rowText {
   min-width: 0;
-  border-left: 1px solid var(--color-border);
-  padding-left: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-left: 0.15rem;
 }
 
 .row h2 {
-  font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: var(--fs-base);
   font-weight: 600;
   overflow-wrap: anywhere;
   color: var(--color-text);
@@ -51,13 +97,25 @@
 
 .row:hover h2 {
   color: var(--color-accent-hover);
-  text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
-.row p {
-  font-size: 0.78rem;
+.rowMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--fs-xs);
   color: var(--color-text-muted);
-  margin-top: 0.25rem;
-  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.rowDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-border-strong);
+  display: inline-block;
+}
+
+.row:hover .rowDot {
+  background: var(--color-accent);
 }

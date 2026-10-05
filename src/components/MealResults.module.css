@@ -1,0 +1,15 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem 1.1rem;
+  background: var(--color-surface);
+  border: var(--hairline);
+  border-radius: var(--radius-lg);
+}

@@ -1,137 +1,199 @@
 .app {
-  max-width: 920px;
+  max-width: var(--container);
   margin: 0 auto;
-  padding: 2rem 1.5rem 3rem;
+  padding: 2.25rem var(--gutter) 1rem;
+  position: relative;
 }
 
 /* ---------------------------------------------------------------------------
- * Masthead — three lines stacked above the nav, with a top rule and a bottom
- * rule framing the whole block. The kicker and dateline are the kind of
- * editorial chrome you'd see on a magazine cover or cookbook title page.
+ * Header — a quiet masthead. Brand on the left, page nav on the right.
+ * A single hairline below, plus a tiny status hint.
  * ------------------------------------------------------------------------- */
 .header {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
   flex-wrap: wrap;
-  padding: 1.1rem 0 1rem;
+  padding: 0 0 1.1rem;
   margin-bottom: 1.75rem;
-  border-top: 3px double var(--color-border-strong);
   border-bottom: 1px solid var(--color-border-strong);
+  position: relative;
 }
 
-.masthead {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
-}
-
-.kicker {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-  letter-spacing: 0.01em;
+/* Two tiny tick marks sit just under the hairline so the header reads
+ * like the top edge of a manuscript page — a quiet, not decorative, cue. */
+.header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 28px;
+  height: 3px;
+  background: var(--color-bg);
+  border-left: 1px solid var(--color-border-strong);
+  border-right: 1px solid var(--color-border-strong);
 }
 
 .brand {
-  font-family: var(--font-serif);
-  font-size: 2.1rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
   color: var(--color-text);
-  line-height: 1.05;
+  text-decoration: none;
+  transition: color var(--t-fast);
+  margin: 0;
 }
 
-.brand a {
+.brandLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
   color: inherit;
-}
-
-.brand a:hover {
-  color: var(--color-accent-hover);
   text-decoration: none;
 }
 
-.dateline {
-  font-size: 0.82rem;
-  color: var(--color-text-faint);
-  font-style: italic;
+.brandLink:hover { color: var(--color-accent-hover); }
+
+.brand:hover .brandMark { transform: rotate(-6deg); }
+
+.brandMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-accent);
+  flex-shrink: 0;
+  transition: transform var(--t-base), border-color var(--t-fast),
+              color var(--t-fast);
 }
 
+.brand:hover .brandMark {
+  transform: rotate(-6deg);
+  border-color: var(--color-accent);
+}
+
+.brandMark svg { display: block; }
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brandTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+.brandSub {
+  font-size: 0.68rem;
+  color: var(--color-text-faint);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Nav — a paper strip with a thin inner shadow on the active item. */
 .nav {
   display: flex;
-  gap: 1.4rem;
-  align-items: baseline;
-  padding-bottom: 0.25rem;
+  gap: 0.3rem;
+  align-items: center;
+  background: var(--color-surface);
+  border: var(--hairline);
+  border-radius: 999px;
+  padding: 0.25rem;
+  box-shadow: inset 0 0 0 1px rgba(34, 26, 19, 0.02);
 }
 
 .nav a {
-  font-size: 0.92rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
-  padding: 0.15rem 0;
-  border-bottom: 1px solid transparent;
-  transition: color 0.12s, border-color 0.12s;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border-bottom: 0;
+  transition: background var(--t-fast), color var(--t-fast);
+  text-decoration: none;
 }
 
 .nav a:hover {
   color: var(--color-text);
+  background: var(--color-surface-2);
   text-decoration: none;
-  border-bottom-color: var(--color-border-strong);
 }
 
-.nav a.active {
-  color: var(--color-text);
-  border-bottom-color: var(--color-text);
-  font-weight: 600;
+.nav a.active,
+.nav a:global(.active) {
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-weight: 500;
+  box-shadow: inset 0 -2px 0 var(--color-accent);
 }
 
-.nav a.active:hover {
-  color: var(--color-accent-hover);
-  border-bottom-color: var(--color-accent);
+.nav a.active:hover,
+.nav a:global(.active):hover {
+  background: var(--color-accent-hover);
+  color: var(--color-bg);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 540px) {
   .header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 0.9rem;
   }
-  .nav {
-    padding-bottom: 0;
-  }
+  .nav { align-self: stretch; justify-content: flex-start; }
 }
 
 /* ---------------------------------------------------------------------------
- * Error banner — flat panel with a thicker left edge in the brick accent.
- * Keeps the palette quiet instead of using alarm colors.
+ * Error banner — left-accent border, dark ink heading, soft body text.
  * ------------------------------------------------------------------------- */
 .error {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 1rem;
   flex-wrap: wrap;
   background: var(--color-surface);
   color: var(--color-text);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-strong);
   border-left: 3px solid var(--color-accent);
   border-radius: var(--radius);
-  padding: 0.75rem 1rem;
-  margin-bottom: 1.25rem;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.5rem;
 }
 
-.error p {
-  font-size: 0.92rem;
+.errorTitle {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.errorBody {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
 }
 
 .error button {
-  border-color: var(--color-border-strong);
+  border-color: var(--color-text);
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
 .error button:hover {
   background: var(--color-text);
   border-color: var(--color-text);
   color: var(--color-bg);
+}
+
+/* Main just exists to apply a bit of breathing room and animation. */
+.main {
+  animation: fadeIn 240ms ease both;
 }

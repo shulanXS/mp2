@@ -1,17 +1,48 @@
-/* NotFound — flat panel, serif heading. */
 .wrap {
-  text-align: center;
-  padding: 3.5rem 1.5rem;
+  text-align: left;
+  padding: 3rem 2rem;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: var(--hairline);
   border-radius: var(--radius-lg);
-  max-width: 480px;
+  max-width: 520px;
   margin: 2rem auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    var(--color-accent) 0,
+    var(--color-accent) 60px,
+    transparent 60px,
+    transparent 100%
+  );
+}
+
+.wrap::after {
+  content: '404';
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 4rem;
+  font-weight: 500;
+  color: var(--color-border-strong);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 .wrap h2 {
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   letter-spacing: -0.01em;
@@ -19,22 +50,32 @@
 
 .wrap p {
   color: var(--color-text-muted);
-  font-size: 0.95rem;
-  font-style: italic;
-  margin-bottom: 1.4rem;
+  font-size: var(--fs-sm);
+  margin-bottom: 1.5rem;
+  max-width: 28rem;
 }
 
 .home {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   background: var(--color-text);
   border: 1px solid var(--color-text);
   color: var(--color-bg);
   border-radius: var(--radius);
-  padding: 0.5rem 1.1rem;
-  font-size: 0.92rem;
+  padding: 0.55rem 1.1rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: background 0.12s, border-color 0.12s, color 0.12s;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+
+.home::before {
+  content: '←';
+  font-size: 0.95rem;
+  margin-right: 0.2rem;
 }
 
 .home:hover {

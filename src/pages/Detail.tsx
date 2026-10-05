@@ -75,13 +75,7 @@ export function Detail({ meals }: Props) {
   }
 
   if (error) return <p className={styles.error}>{error}</p>
-  if (!meal)
-    return (
-      <div className={styles.detailLoading}>
-        <span className={styles.detailSpinner} aria-hidden="true" />
-        Loading meal…
-      </div>
-    )
+  if (!meal) return <p className={styles.loading}>Loading…</p>
   const ingredients = Array.from({ length: 20 }, (_, i) => i + 1)
     .map((i) => ({
       name: meal[`strIngredient${i}`]?.trim(),
@@ -90,18 +84,31 @@ export function Detail({ meals }: Props) {
     .filter((x) => x.name)
     // Index in the key: a recipe can list the same ingredient twice with
     // different measures.
-    .map((x, i) => ({ ...x, key: `${x.name}-${i}` }))
+    .map((x, i) => ({ ...x, key: `${x.name}-${i}`, idx: i + 1 }))
+
+  const tagList = (meal.strTags || '')
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean)
 
   return (
     <article className={styles.detail}>
       <nav className={styles.nav} aria-label="Meal navigation">
-        <button onClick={() => target(-1)} disabled={index < 0} className={styles.navButton}>
+        <button
+          className={styles.navBtn}
+          onClick={() => target(-1)}
+          disabled={index < 0}
+        >
           ← Previous
         </button>
         <div className={styles.navMid}>
           {index >= 0 && (
             <span className={styles.position}>
-              {index + 1} of {total}
+              <span className={styles.positionCurrent}>{index + 1}</span>
+              <span className={styles.positionSep}>/</span>
+              <span className={styles.positionTotal}>
+                {String(total).padStart(2, '0')}
+              </span>
             </span>
           )}
           <Link
@@ -111,26 +118,63 @@ export function Detail({ meals }: Props) {
             }}
             className={styles.back}
           >
-            Back to {fromGallery ? 'gallery' : 'list'}
+            ← Back to {fromGallery ? 'gallery' : 'list'}
           </Link>
         </div>
-        <button onClick={() => target(1)} disabled={index < 0} className={styles.navButton}>
+        <button
+          className={styles.navBtn}
+          onClick={() => target(1)}
+          disabled={index < 0}
+        >
           Next →
         </button>
       </nav>
 
-      <figure className={styles.figure}>
-        <div className={styles.body}>
+      <div className={styles.body}>
+        <figure className={styles.figure}>
           <img src={meal.strMealThumb} alt={meal.strMeal} />
-          <div className={styles.text}>
+          <figcaption className={styles.figureCaption}>
+            <span>{meal.strMeal}</span>
+            <span>01 / 0{ingredients.length || 1}</span>
+          </figcaption>
+          {meal.strYoutube && (
+            <a
+              className={styles.youtube}
+              href={meal.strYoutube}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Watch on YouTube
+            </a>
+          )}
+        </figure>
+
+        <div className={styles.recipe}>
+          <header>
             <h1>{meal.strMeal}</h1>
-            <dl className={styles.meta}>
+            {tagList.length > 0 && (
+              <ul className={styles.tags}>
+                {tagList.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
+            )}
+          </header>
+
+          <dl className={styles.meta}>
+            <div>
               <dt>Category</dt>
               <dd>{meal.strCategory || NOT_RECORDED}</dd>
+            </div>
+            <div>
               <dt>Area</dt>
               <dd>{meal.strArea || NOT_RECORDED}</dd>
+            </div>
+            <div>
               <dt>Tags</dt>
               <dd>{meal.strTags || '—'}</dd>
+            </div>
+            <div>
               <dt>Source</dt>
               <dd>
                 {meal.strSource ? (
@@ -141,32 +185,47 @@ export function Detail({ meals }: Props) {
                   '—'
                 )}
               </dd>
-            </dl>
+            </div>
+          </dl>
 
-            <h2>Ingredients</h2>
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>
+              <span>Ingredients</span>
+              <span className={styles.sectionCount}>
+                {String(ingredients.length).padStart(2, '0')} items
+              </span>
+            </h2>
             {ingredients.length > 0 ? (
-              <ol className={styles.ingredients}>
+              <ul className={styles.ingredients}>
                 {ingredients.map((x) => (
                   <li key={x.key}>
+                    <span className={styles.checkbox} aria-hidden="true" />
                     <span className={styles.ingName}>{x.name}</span>
-                    {x.measure ? (
-                      <span className={styles.ingMeasure}>{x.measure}</span>
-                    ) : null}
+                    {x.measure && (
+                      <span className={styles.measure}>— {x.measure}</span>
+                    )}
+                    <span className={styles.ingIndex}>
+                      {String(x.idx).padStart(2, '0')}
+                    </span>
                   </li>
                 ))}
-              </ol>
+              </ul>
             ) : (
               <p className={styles.emptyNote}>No ingredients listed.</p>
             )}
+          </section>
 
-            <h2>Instructions</h2>
-            <p className={styles.instructions}>{formatInstructions(meal.strInstructions)}</p>
-          </div>
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>
+              <span>Instructions</span>
+              <span className={styles.sectionHint}>read top to bottom</span>
+            </h2>
+            <p className={styles.instructions}>
+              {formatInstructions(meal.strInstructions)}
+            </p>
+          </section>
         </div>
-        <figcaption className={styles.caption}>
-          Photograph and recipe text sourced from TheMealDB.com.
-        </figcaption>
-      </figure>
+      </div>
     </article>
   )
 }

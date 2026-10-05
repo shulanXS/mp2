@@ -16,13 +16,36 @@ export default function App() {
   return (
     <div className={styles.app}>
       <header className={styles.header}>
-        <div className={styles.masthead}>
-          <p className={styles.kicker}>A Catalog of Recipes · No. 1</p>
-          <h1 className={styles.brand}>
-            <Link to="/">The Meal DB</Link>
-          </h1>
-          <p className={styles.dateline}>Browse, sort, and inspect meals from the open data set.</p>
-        </div>
+        <h1 className={styles.brand}>
+          <Link to="/" className={styles.brandLink}>
+            <span className={styles.brandMark} aria-hidden="true">
+              <svg viewBox="0 0 36 36" width="36" height="36" focusable="false">
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeDasharray="2 2.5"
+                  opacity="0.55"
+                />
+                <path
+                  d="M18 8 V18 L26 22"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+                <circle cx="18" cy="18" r="2.2" fill="currentColor" />
+              </svg>
+            </span>
+            <span className={styles.brandText}>
+              <span className={styles.brandTitle}>The Meal DB</span>
+              <span className={styles.brandSub}>curated · catalog · cooked</span>
+            </span>
+          </Link>
+        </h1>
         <nav className={styles.nav} aria-label="Main">
           <NavLink to="/" end>
             List
@@ -54,6 +77,19 @@ export default function App() {
         <Route path="/detail/:id" element={<Detail meals={meals} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+
+      <footer className="siteFooter">
+        <span className="siteFooterBrand">
+          <span className="siteFooterDot" aria-hidden="true" />
+          The Meal DB
+        </span>
+        <span>
+          Data from{' '}
+          <a href="https://www.themealdb.com" target="_blank" rel="noreferrer">
+            themealdb.com
+          </a>
+        </span>
+      </footer>
     </div>
   )
 }

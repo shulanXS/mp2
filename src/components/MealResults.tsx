@@ -27,42 +27,42 @@ export function MealResults({
   const visible = useVisibleMeals(meals)
   const trimmed = urlQuery.trim()
   const searching = trimmed.length > 0
-
   return (
     <div>
       <SearchBar />
-
       <CategoryFilter categories={categories} />
-
       <SortBar />
 
       {!loading && visible.length > 0 && (
         <p className="count">
-          <span className="countNum">{visible.length}</span>
-          <span>
-            {visible.length === 1 ? 'meal' : 'meals'}
-            {searching ? ` matching “${trimmed}”` : ''}
-          </span>
+          <strong>{String(visible.length).padStart(2, '0')}</strong>
+          <span>{visible.length === 1 ? 'meal' : 'meals'}</span>
+          {searching && (
+            <span className="countQuery">matching “{trimmed}”</span>
+          )}
         </p>
       )}
 
       {loading ? (
         <div className="loading">
           <span className="spinner" aria-hidden="true" />
-          Loading meals…
+          <span>Loading meals…</span>
         </div>
       ) : visible.length === 0 ? (
         <div className="empty">
           <p className="emptyTitle">
-            {searching ? `No meals match “${trimmed}”.` : 'No meals found.'}
+            {searching ? `No meals match “${trimmed}”` : 'No meals to show'}
           </p>
-          {searching ? (
-            <p className="emptyHint">
-              <button className="linkButton" onClick={() => setLocal('')}>
-                Show all meals
-              </button>
-            </p>
-          ) : null}
+          <p className="emptyHint">
+            {searching
+              ? 'Try a shorter keyword or clear the search.'
+              : 'Adjust your filters above to bring meals back.'}
+          </p>
+          {searching && (
+            <button className="linkButton" onClick={() => setLocal('')}>
+              Show all meals
+            </button>
+          )}
         </div>
       ) : (
         <ul className={`${className} resultsGrid`} aria-label={label}>
