@@ -16,7 +16,7 @@ export type MealSummary = Pick<
   'idMeal' | 'strMeal' | 'strMealThumb' | 'strArea' | 'strCategory'
 >
 
-export type SortKey = 'strMeal' | 'strArea' | 'strCategory'
+type SortKey = 'strMeal' | 'strArea' | 'strCategory'
 type Order = 'asc' | 'desc'
 
 export const SORT_KEYS: readonly SortKey[] = ['strMeal', 'strArea', 'strCategory']

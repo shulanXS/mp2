@@ -28,16 +28,6 @@
   composes: pillOn from '../index.css';
 }
 
-.sortChip:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.sortChip:disabled:hover {
-  border-color: inherit;
-  color: inherit;
-}
-
 /* Fixed width so flipping the direction does not shift the chips. */
 .orderToggle {
   margin-left: auto;

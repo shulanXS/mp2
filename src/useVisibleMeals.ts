@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { parseOrder, parseSortKey } from './types'
+import { NOT_RECORDED, parseOrder, parseSortKey } from './types'
 import type { MealSummary } from './types'
 
 // Shared by the list, the gallery and the detail view so all three agree on
@@ -18,12 +18,21 @@ export function useVisibleMeals(meals: MealSummary[]): MealSummary[] {
       : meals.slice()
 
     const dir = order === 'asc' ? 1 : -1
+    // Rows whose sort key is the NOT_RECORDED fallback sort after every other
+    // row, regardless of direction, so a missing field never pins one meal to
+    // the top of the list in either ascending or descending order.
+    const cmp = (a: MealSummary, b: MealSummary): number => {
+      const av = a[sortKey] === NOT_RECORDED
+      const bv = b[sortKey] === NOT_RECORDED
+      if (av !== bv) return av ? 1 : -1
+      return (a[sortKey] ?? '').localeCompare(b[sortKey] ?? '')
+    }
     return matched.sort(
-      (a, b) =>
-        (a[sortKey] ?? '').localeCompare(b[sortKey] ?? '') * dir ||
-        // The tiebreak needs the same direction, or descending looks like it
-        // did nothing when every meal shares one key.
-        a.strMeal.localeCompare(b.strMeal) * dir,
+      (a, b) => {
+        const primary = cmp(a, b)
+        if (primary !== 0) return primary * dir
+        return a.strMeal.localeCompare(b.strMeal) * dir
+      },
     )
   }, [meals, query, sortKey, order])
 }
