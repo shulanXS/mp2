@@ -1,24 +1,17 @@
+/* NotFound — a single flat panel. No big emoji, no gradient, no glow. */
 .wrap {
   text-align: center;
-  padding: 4rem 1.5rem;
-  background: linear-gradient(135deg, var(--color-surface-raised) 0%, var(--color-bg-grad-1) 100%);
+  padding: 3.5rem 1.5rem;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  max-width: 520px;
+  max-width: 480px;
   margin: 2rem auto;
 }
 
-.icon {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 0.6rem;
-  filter: grayscale(0.1);
-}
-
 .wrap h2 {
-  font-size: 1.45rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
   margin-bottom: 0.5rem;
   letter-spacing: -0.01em;
 }
@@ -26,28 +19,25 @@
 .wrap p {
   color: var(--color-text-muted);
   font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.4rem;
 }
 
 .home {
   display: inline-block;
-  background: var(--color-accent);
-  border: 1px solid var(--color-accent);
-  color: #fff;
+  background: var(--color-text);
+  border: 1px solid var(--color-text);
+  color: var(--color-bg);
   border-radius: var(--radius);
-  padding: 0.6rem 1.3rem;
+  padding: 0.5rem 1.1rem;
   font-size: 0.92rem;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
-  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
-  box-shadow: 0 2px 8px var(--color-accent-glow);
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
 }
 
 .home:hover {
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
-  color: #fff;
+  color: var(--color-bg);
   text-decoration: none;
-  box-shadow: 0 4px 14px var(--color-accent-glow);
-  transform: translateY(-1px);
 }

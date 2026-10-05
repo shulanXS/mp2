@@ -44,17 +44,14 @@ export function MealResults({
       )}
 
       {loading ? (
-        <div className="loading" role="status" aria-live="polite">
+        <div className="loading">
           <span className="spinner" aria-hidden="true" />
-          <span>Loading delicious meals…</span>
+          Loading meals…
         </div>
       ) : visible.length === 0 ? (
         <div className="empty">
-          <span className="emptyIcon" aria-hidden="true">
-            {searching ? '🔍' : '🍽'}
-          </span>
           <p className="emptyTitle">
-            {searching ? `No meals match “${trimmed}”` : 'No meals found'}
+            {searching ? `No meals match “${trimmed}”.` : 'No meals found.'}
           </p>
           {searching ? (
             <p className="emptyHint">
@@ -62,9 +59,7 @@ export function MealResults({
                 Show all meals
               </button>
             </p>
-          ) : (
-            <p className="emptyHint">Try clearing your filters.</p>
-          )}
+          ) : null}
         </div>
       ) : (
         <ul className={`${className} resultsGrid`} aria-label={label}>

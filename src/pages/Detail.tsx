@@ -77,9 +77,9 @@ export function Detail({ meals }: Props) {
   if (error) return <p className={styles.error}>{error}</p>
   if (!meal)
     return (
-      <div className={styles.detailLoading} role="status" aria-live="polite">
+      <div className={styles.detailLoading}>
         <span className={styles.detailSpinner} aria-hidden="true" />
-        <span>Loading recipe…</span>
+        Loading meal…
       </div>
     )
   const ingredients = Array.from({ length: 20 }, (_, i) => i + 1)
@@ -148,7 +148,7 @@ export function Detail({ meals }: Props) {
               {ingredients.map((x) => (
                 <li key={x.key}>
                   {x.name}
-                  {x.measure ? <span className={styles.measure}> — {x.measure}</span> : ''}
+                  {x.measure ? ` — ${x.measure}` : ''}
                 </li>
               ))}
             </ul>

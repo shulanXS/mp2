@@ -35,9 +35,7 @@ export function SortBar() {
             : 'Currently descending. Activate to sort ascending.'
         }
       >
-        <span className={styles.orderArrow} aria-hidden="true">
-          {direction === 'asc' ? '↑' : '↓'}
-        </span>
+        <span aria-hidden="true">{direction === 'asc' ? '↑' : '↓'}</span>{' '}
         {direction === 'asc' ? 'Ascending' : 'Descending'}
       </button>
     </div>

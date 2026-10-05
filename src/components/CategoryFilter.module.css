@@ -1,20 +1,15 @@
 .wrap {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.3rem;
 }
 
 .chip {
   composes: pill from '../index.css';
-}
-
-.chip:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
 }
 
 .on {
@@ -22,18 +17,14 @@
 }
 
 .status {
-  margin-top: 0.6rem;
+  margin-top: 0.5rem;
   font-size: 0.82rem;
   color: var(--color-text-muted);
+  font-style: italic;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem;
-}
-
-.status::before {
-  content: '🎯';
-  font-size: 0.85rem;
+  align-items: baseline;
+  gap: 0.6rem;
 }
 
 .clear {
@@ -42,6 +33,7 @@
   padding: 0;
   color: var(--color-accent);
   text-decoration: underline;
+  text-underline-offset: 2px;
   font-size: 0.82rem;
   cursor: pointer;
 }
@@ -54,6 +46,6 @@
 @media (max-width: 640px) {
   .chip {
     font-size: 0.8rem;
-    padding: 0.25rem 0.6rem;
+    padding: 0.25rem 0.55rem;
   }
 }

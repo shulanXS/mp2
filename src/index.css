@@ -1,24 +1,32 @@
+/* ---------------------------------------------------------------------------
+ * Design tokens
+ *
+ * Warm cream surface, dark brown ink, a single muted brick for emphasis.
+ * No gradients, no glow rings, no decorative dots — color is meant to recede
+ * so the meal names do the work.
+ * ------------------------------------------------------------------------- */
 :root {
-  --color-bg: #faf3e8;
-  --color-bg-grad-1: #fdf6ea;
-  --color-bg-grad-2: #f5e9d2;
-  --color-surface: #fffaf2;
-  --color-surface-raised: #ffffff;
-  --color-border: #ecdcbf;
-  --color-border-strong: #d8c4a8;
-  --color-text: #2a1f15;
-  --color-text-muted: #806a55;
-  --color-text-faint: #a6907a;
-  --color-accent: #c45a13;
-  --color-accent-hover: #9c450d;
-  --color-accent-soft: #fbe1c7;
-  --color-accent-glow: rgba(196, 90, 19, 0.22);
-  --shadow-sm: 0 1px 2px rgba(120, 80, 40, 0.06), 0 1px 3px rgba(120, 80, 40, 0.04);
-  --shadow-md: 0 2px 6px rgba(120, 80, 40, 0.08), 0 4px 14px rgba(120, 80, 40, 0.06);
-  --shadow-lg: 0 8px 24px rgba(120, 80, 40, 0.12), 0 2px 6px rgba(120, 80, 40, 0.08);
-  --radius: 10px;
-  --radius-sm: 6px;
-  --radius-lg: 16px;
+  --color-bg: #f4ece0;
+  --color-surface: #fbf6ec;
+  --color-border: #e0d3bb;
+  --color-border-strong: #c9b893;
+  --color-text: #2c211a;
+  --color-text-muted: #6e5e4c;
+  --color-text-faint: #9a8a76;
+
+  /* The accent is intentionally dusty, not vibrant — closer to terracotta
+   * than orange. Hover state is darker rather than brighter. */
+  --color-accent: #a04a1f;
+  --color-accent-hover: #7d3817;
+  --color-accent-soft: #ebd5be;
+
+  /* Hairlines only. Avoid stack-on-stack shadows that scream "designed". */
+  --hairline: 1px solid var(--color-border);
+  --hairline-strong: 1px solid var(--color-border-strong);
+
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 8px;
 }
 
 * {
@@ -27,15 +35,17 @@
   padding: 0;
 }
 
+html,
 body {
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  height: 100%;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--color-text);
-  background:
-    radial-gradient(ellipse 90% 60% at 50% 0%, var(--color-bg-grad-1), transparent 70%),
-    radial-gradient(ellipse 60% 50% at 100% 30%, var(--color-accent-soft), transparent 60%),
-    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-grad-2) 100%);
-  background-attachment: fixed;
-  line-height: 1.6;
+  background: var(--color-bg);
+  line-height: 1.55;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
@@ -44,23 +54,24 @@ body {
 a {
   color: var(--color-accent);
   text-decoration: none;
-  transition: color 0.15s;
+  transition: color 0.12s;
 }
 
 a:hover {
   color: var(--color-accent-hover);
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 button {
   font: inherit;
   cursor: pointer;
-  border: 1px solid var(--color-border-strong);
-  background: var(--color-surface-raised);
+  border: var(--hairline-strong);
+  background: var(--color-surface);
   color: inherit;
   border-radius: var(--radius);
-  padding: 0.5rem 0.95rem;
-  transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s, transform 0.15s;
+  padding: 0.45rem 0.85rem;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
 }
 
 button:hover {
@@ -70,7 +81,7 @@ button:hover {
 }
 
 button:active {
-  transform: translateY(1px);
+  background: var(--color-border);
 }
 
 button:focus-visible,
@@ -84,24 +95,23 @@ a:focus-visible {
 input[type='text'],
 select {
   font: inherit;
-  padding: 0.55rem 0.85rem;
-  border: 1px solid var(--color-border-strong);
+  padding: 0.5rem 0.75rem;
+  border: var(--hairline-strong);
   border-radius: var(--radius);
-  background: var(--color-surface-raised);
+  background: var(--color-surface);
   color: inherit;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.12s;
 }
 
 input[type='text']:focus,
 select:focus {
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 4px var(--color-accent-glow);
   outline: none;
 }
 
 h1 {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-size: 1.35rem;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
@@ -109,49 +119,31 @@ h2 {
   font-weight: 600;
 }
 
-/* Result count, shared with the list and gallery. */
+/* ---------------------------------------------------------------------------
+ * Result count, shared by list and gallery.
+ *
+ * Plain one-line italic muted text. No pill, no leading dot — those read as
+ * dashboard chrome.
+ * ------------------------------------------------------------------------- */
 .count {
   margin: 0 0 1rem;
   font-size: 0.85rem;
   color: var(--color-text-muted);
-  letter-spacing: 0.01em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.75rem;
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  box-shadow: var(--shadow-sm);
+  font-style: italic;
 }
 
-.count::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-soft);
-}
-
+/* Plain centered empty-state, no decorative icon. */
 .empty {
   text-align: center;
   padding: 3rem 1.5rem;
-  background: var(--color-surface-raised);
+  background: var(--color-surface);
   border: 1px dashed var(--color-border-strong);
   border-radius: var(--radius-lg);
   color: var(--color-text-muted);
 }
 
-.emptyIcon {
-  font-size: 2.4rem;
-  display: block;
-  margin-bottom: 0.4rem;
-  filter: grayscale(0.2);
-}
-
 .emptyTitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 0.2rem;
@@ -165,19 +157,18 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
   padding: 3rem 1rem;
   color: var(--color-text-muted);
-  font-size: 0.95rem;
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-border);
+  font-size: 0.92rem;
+  background: var(--color-surface);
+  border: var(--hairline);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
 }
 
 .spinner {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   border: 2px solid var(--color-border-strong);
   border-top-color: var(--color-accent);
@@ -196,6 +187,7 @@ h2 {
   padding: 0;
   color: var(--color-accent);
   text-decoration: underline;
+  text-underline-offset: 2px;
   cursor: pointer;
 }
 
@@ -204,44 +196,42 @@ h2 {
   color: var(--color-accent-hover);
 }
 
+/* ---------------------------------------------------------------------------
+ * Pill — used by sort and category chips. Lower-profile than the previous
+ * rounded buttons; subtle border by default, solid ink when selected.
+ * ------------------------------------------------------------------------- */
+.pill {
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
 .pillOn {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: #fff;
-  box-shadow: var(--shadow-sm);
+  background: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--color-bg);
 }
 
 .pillOn:hover {
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
-  color: #fff;
+  color: var(--color-bg);
 }
 
-/* Pill shape, also shared by the sort and category chips. */
-.pill {
-  border-radius: 999px;
-  padding: 0.3rem 0.8rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s;
-}
-
-/* Grid shape shared by the list and the gallery; each page's module sets the
-   column minimum on top of this. */
+/* Shared list/gallery grid shape; pages set the column minimum. */
 .resultsGrid {
   list-style: none;
   display: grid;
-  gap: 1rem;
-  animation: fadeUp 0.3s ease-out both;
+  gap: 0.75rem;
 }
 
-@keyframes fadeUp {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(6px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }

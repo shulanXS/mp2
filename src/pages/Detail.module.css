@@ -1,20 +1,22 @@
 .detail {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1.5rem;
 }
 
+/* ---------------------------------------------------------------------------
+ * Detail nav — flat row, hairline border, no gradient panel.
+ * ------------------------------------------------------------------------- */
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.8rem;
   flex-wrap: wrap;
-  background: linear-gradient(135deg, var(--color-surface-raised) 0%, var(--color-bg-grad-1) 100%);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 0.7rem 1rem;
-  box-shadow: var(--shadow-sm);
+  padding: 0.6rem 0.9rem;
 }
 
 .navMid {
@@ -26,26 +28,22 @@
 }
 
 .back {
-  background: var(--color-accent);
-  border: 1px solid var(--color-accent);
-  color: #fff;
-  font: inherit;
-  line-height: normal;
-  padding: 0.5rem 1rem;
+  background: var(--color-text);
+  border: 1px solid var(--color-text);
+  color: var(--color-bg);
+  padding: 0.45rem 0.9rem;
   border-radius: var(--radius);
-  font-weight: 600;
+  font-weight: 500;
   white-space: nowrap;
-  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
   text-decoration: none;
 }
 
 .back:hover {
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
-  color: #fff;
+  color: var(--color-bg);
   text-decoration: none;
-  box-shadow: 0 2px 10px var(--color-accent-glow);
-  transform: translateY(-1px);
 }
 
 .back:focus-visible {
@@ -57,40 +55,34 @@
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
   font-size: 0.82rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.15rem 0.55rem;
-  background: var(--color-accent-soft);
-  border-radius: 999px;
-  font-weight: 500;
 }
 
 .error {
-  background: #fdecea;
-  color: #8a1c11;
-  border: 1px solid #f0b4ac;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-accent);
+  border-left-width: 3px;
   border-radius: var(--radius);
-  padding: 0.85rem 1.1rem;
-  box-shadow: var(--shadow-sm);
+  padding: 0.75rem 1rem;
 }
 
+/* ---------------------------------------------------------------------------
+ * Body — image + text on a flat cream surface. Single hairline, no glow.
+ * ------------------------------------------------------------------------- */
 .body {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 2rem;
-  background: linear-gradient(135deg, var(--color-surface-raised) 0%, var(--color-bg-grad-1) 100%);
+  grid-template-columns: 280px 1fr;
+  gap: 1.75rem;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 1.6rem;
-  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
 }
 
 .body > img {
   width: 100%;
   border-radius: var(--radius);
-  box-shadow: var(--shadow-lg);
-  background: var(--color-accent-soft);
+  background: var(--color-border);
   align-self: start;
   border: 1px solid var(--color-border);
 }
@@ -98,22 +90,19 @@
 .meta {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.4rem 1rem;
-  margin: 0.9rem 0 1.3rem;
+  gap: 0.35rem 1rem;
+  margin: 0.9rem 0 1.25rem;
   font-size: 0.9rem;
-  padding: 0.85rem 1rem;
-  background: var(--color-surface-raised);
+  padding: 0.75rem 0.9rem;
+  background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  box-shadow: inset 0 1px 2px rgba(120, 80, 40, 0.04);
 }
 
 .meta dt {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text-muted);
   font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   align-self: center;
 }
 
@@ -122,10 +111,10 @@
   color: var(--color-text);
 }
 
-/* The external recipe link is the only link that should read as a link. */
 .meta dd a {
   color: var(--color-accent);
   text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .meta dd a:hover {
@@ -134,12 +123,54 @@
 
 .body h1 {
   font-size: 1.65rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-  /* Long dish names must not push the grid open. */
+  font-weight: 600;
+  margin-bottom: 0.15rem;
   overflow-wrap: anywhere;
   letter-spacing: -0.015em;
   line-height: 1.25;
+}
+
+/* Section headings inside the detail body — small caps style without the
+ * uppercase tracking that screams AI design system. */
+.body h2 {
+  font-size: 0.78rem;
+  margin: 1.4rem 0 0.5rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  font-variant: small-caps;
+}
+
+.ingredients {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.35rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.ingredients li {
+  padding: 0.25rem 0;
+  border-bottom: 1px dotted var(--color-border);
+  overflow-wrap: anywhere;
+}
+
+.measure {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-left: 0.2rem;
+}
+
+.instructions {
+  white-space: pre-line;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
 }
 
 .emptyNote {
@@ -148,94 +179,22 @@
   font-style: italic;
 }
 
-.body h2 {
-  font-size: 1.05rem;
-  margin: 1.3rem 0 0.6rem;
-  color: var(--color-text);
-  font-weight: 700;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-.body h2::before {
-  content: '';
-  width: 4px;
-  height: 1rem;
-  border-radius: 2px;
-  background: linear-gradient(180deg, var(--color-accent), var(--color-accent-hover));
-}
-
-.ingredients {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.4rem 0.8rem;
-  font-size: 0.9rem;
-}
-
-.ingredients li {
-  padding: 0.4rem 0.7rem 0.4rem 1.6rem;
-  border-bottom: 1px dashed var(--color-border);
-  position: relative;
-  border-radius: var(--radius-sm);
-  transition: background 0.15s;
-}
-
-.ingredients li:hover {
-  background: var(--color-accent-soft);
-}
-
-.ingredients li::before {
-  content: '•';
-  position: absolute;
-  left: 0.55rem;
-  top: 0.4rem;
-  color: var(--color-accent);
-  font-weight: 700;
-  font-size: 1.1rem;
-  line-height: 1;
-}
-
-.measure {
-  color: var(--color-text-muted);
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin-left: 0.25rem;
-}
-
-.instructions {
-  white-space: pre-line;
-  line-height: 1.75;
-  font-size: 0.95rem;
-  color: var(--color-text);
-  background: var(--color-surface-raised);
-  border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-accent);
-  border-radius: var(--radius);
-  padding: 1.1rem 1.3rem;
-  box-shadow: var(--shadow-sm);
-}
-
 .detailLoading {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
   padding: 3rem 1rem;
   color: var(--color-text-muted);
-  font-size: 0.95rem;
-  background: var(--color-surface-raised);
+  font-size: 0.92rem;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
 }
 
 .detailSpinner {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   border: 2px solid var(--color-border-strong);
   border-top-color: var(--color-accent);
@@ -251,7 +210,7 @@
 @media (max-width: 640px) {
   .body {
     grid-template-columns: 1fr;
-    padding: 1.1rem;
-    gap: 1.4rem;
+    padding: 1rem;
+    gap: 1.25rem;
   }
 }
