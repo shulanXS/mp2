@@ -87,10 +87,6 @@ body::before {
 
 a { color: inherit; text-decoration: none; transition: color var(--t-fast); }
 
-/* Only the recipe page title and the section headings are serif. Everything
- * else (brand, intake headline, list/gallery card titles) sets in Inter —
- * keeps the editorial feel focused on the page that actually reads like
- * editorial content. */
 h1, h2 {
   letter-spacing: -0.02em;
   color: var(--color-text);
@@ -136,56 +132,23 @@ a:focus-visible,
   border-radius: var(--radius-sm);
 }
 
-input[type='text'],
-select {
-  font: inherit;
+/* Plain text inputs (no class — keeps specificity low so the SearchBar
+ * module class can override padding / border-color without a fight). */
+input[type='text'].bare,
+input[type='text'].bare:focus {
   padding: 0.7rem 0.95rem;
   border: var(--hairline-strong);
   border-radius: var(--radius);
   background: var(--color-surface);
   color: inherit;
-  transition:
-    border-color var(--t-fast),
-    background var(--t-fast),
-    box-shadow var(--t-fast);
+  box-shadow: none;
 }
-input[type='text']::placeholder { color: var(--color-text-faint); }
-input[type='text']:hover,
-select:hover { border-color: var(--color-text-faint); }
-input[type='text']:focus,
-select:focus {
+input[type='text'].bare::placeholder { color: var(--color-text-faint); }
+input[type='text'].bare:hover { border-color: var(--color-text-faint); }
+input[type='text'].bare:focus {
   border-color: var(--color-accent);
-  outline: none;
   background: var(--color-bg);
   box-shadow: 0 0 0 4px var(--color-accent-soft);
-}
-
-/* ---------------------------------------------------------------------------
- * Result count, shared by list and gallery.
- * ------------------------------------------------------------------------- */
-.count {
-  margin: 0.25rem 0 0.85rem;
-  font-size: var(--fs-xs);
-  color: var(--color-text-muted);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-.count::before { content: ''; width: 2rem; height: 1px; background: var(--color-text-faint); }
-.count strong {
-  font-weight: 600;
-  color: var(--color-text);
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.78rem;
-  background: var(--color-surface);
-  border: var(--hairline);
-  border-radius: var(--radius-sm);
-  padding: 0.05rem 0.45rem;
-  letter-spacing: 0.02em;
 }
 
 .empty {

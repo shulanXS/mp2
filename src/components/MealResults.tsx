@@ -31,7 +31,7 @@ export function MealResults({
 
   return (
     <section className={styles.shell}>
-      <div className={styles.hero}>
+      <div className={styles.intro}>
         <p className={styles.eyebrow}>
           {searching ? 'Refining the index' : 'Browsing the index'}
         </p>
@@ -44,26 +44,22 @@ export function MealResults({
             <>What will you cook next?</>
           )}
         </h2>
-        <p className={styles.lede}>
-          Search, sort, and filter through {meals.length} dishes from
-          TheMealDB. Tap any name to read the full method.
-        </p>
       </div>
 
       <div className={styles.controls}>
-        <div className={styles.controlSearch}>
+        <div className={styles.searchCell}>
           <SearchBar />
         </div>
-        <div className={styles.controlFilters}>
+        <div className={styles.chipsCell}>
           <CategoryFilter categories={categories} />
         </div>
-        <div className={styles.controlSort}>
+        <div className={styles.sortCell}>
           <SortBar />
         </div>
       </div>
 
       {!loading && visible.length > 0 && (
-        <p className="count">
+        <p className={styles.count}>
           <strong>{visible.length}</strong>
           {visible.length === 1 ? 'meal' : 'meals'}
           {searching ? ` for “${trimmed}”` : ' in view'}

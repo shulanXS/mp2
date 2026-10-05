@@ -34,7 +34,7 @@ export function SearchBar() {
           ref={inputRef}
           type="text"
           className={styles.input}
-          placeholder="Search meals, areas, tags…"
+          placeholder="Try “carbonara”, “thai”, “cake”…"
           value={local}
           onChange={(e) => setLocal(e.target.value)}
           aria-label="Search meals"

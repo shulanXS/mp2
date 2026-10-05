@@ -12,7 +12,7 @@ export function SortBar() {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.header}>
+      <div className={styles.row}>
         <span className={styles.label}>Sort</span>
         <button
           type="button"
@@ -28,7 +28,7 @@ export function SortBar() {
           <span className={styles.arrow} aria-hidden="true">
             {direction === 'asc' ? '↑' : '↓'}
           </span>
-          {direction === 'asc' ? 'Asc' : 'Desc'}
+          <span>{direction === 'asc' ? 'Asc' : 'Desc'}</span>
         </button>
       </div>
       <div className={styles.sortChips} role="group" aria-label="Sort by">
