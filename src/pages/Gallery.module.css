@@ -1,5 +1,5 @@
 .list {
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
 /* Card — image with a thin frame, title in a dark ink strip pinned to the

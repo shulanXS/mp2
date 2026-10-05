@@ -34,7 +34,7 @@
   --shadow-2: 0 1px 2px rgba(20, 20, 18, 0.04), 0 6px 16px -8px rgba(20, 20, 18, 0.08);
   --shadow-3: 0 1px 2px rgba(20, 20, 18, 0.04), 0 18px 36px -18px rgba(20, 20, 18, 0.14);
 
-  --container: 1040px;
+  --container: 1240px;
   --gutter: clamp(1.1rem, 3vw, 2rem);
 
   --fs-xs: 0.74rem;
