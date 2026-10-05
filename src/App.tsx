@@ -16,9 +16,13 @@ export default function App() {
   return (
     <div className={styles.app}>
       <header className={styles.header}>
-        <h1 className={styles.brand}>
-          <Link to="/">The Meal DB</Link>
-        </h1>
+        <div className={styles.masthead}>
+          <p className={styles.kicker}>A Catalog of Recipes · No. 1</p>
+          <h1 className={styles.brand}>
+            <Link to="/">The Meal DB</Link>
+          </h1>
+          <p className={styles.dateline}>Browse, sort, and inspect meals from the open data set.</p>
+        </div>
         <nav className={styles.nav} aria-label="Main">
           <NavLink to="/" end>
             List

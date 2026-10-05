@@ -38,8 +38,11 @@ export function MealResults({
 
       {!loading && visible.length > 0 && (
         <p className="count">
-          {visible.length} {visible.length === 1 ? 'meal' : 'meals'}
-          {searching ? ` matching “${trimmed}”` : ''}
+          <span className="countNum">{visible.length}</span>
+          <span>
+            {visible.length === 1 ? 'meal' : 'meals'}
+            {searching ? ` matching “${trimmed}”` : ''}
+          </span>
         </p>
       )}
 

@@ -95,7 +95,7 @@ export function Detail({ meals }: Props) {
   return (
     <article className={styles.detail}>
       <nav className={styles.nav} aria-label="Meal navigation">
-        <button onClick={() => target(-1)} disabled={index < 0}>
+        <button onClick={() => target(-1)} disabled={index < 0} className={styles.navButton}>
           ← Previous
         </button>
         <div className={styles.navMid}>
@@ -111,55 +111,62 @@ export function Detail({ meals }: Props) {
             }}
             className={styles.back}
           >
-            ← Back to {fromGallery ? 'gallery' : 'list'}
+            Back to {fromGallery ? 'gallery' : 'list'}
           </Link>
         </div>
-        <button onClick={() => target(1)} disabled={index < 0}>
+        <button onClick={() => target(1)} disabled={index < 0} className={styles.navButton}>
           Next →
         </button>
       </nav>
 
-      <div className={styles.body}>
-        <img src={meal.strMealThumb} alt={meal.strMeal} />
-        <div>
-          <h1>{meal.strMeal}</h1>
-          <dl className={styles.meta}>
-            <dt>Category</dt>
-            <dd>{meal.strCategory || NOT_RECORDED}</dd>
-            <dt>Area</dt>
-            <dd>{meal.strArea || NOT_RECORDED}</dd>
-            <dt>Tags</dt>
-            <dd>{meal.strTags || '—'}</dd>
-            <dt>Source</dt>
-            <dd>
-              {meal.strSource ? (
-                <a href={meal.strSource} target="_blank" rel="noreferrer">
-                  {sourceLabel(meal.strSource)}
-                </a>
-              ) : (
-                '—'
-              )}
-            </dd>
-          </dl>
+      <figure className={styles.figure}>
+        <div className={styles.body}>
+          <img src={meal.strMealThumb} alt={meal.strMeal} />
+          <div className={styles.text}>
+            <h1>{meal.strMeal}</h1>
+            <dl className={styles.meta}>
+              <dt>Category</dt>
+              <dd>{meal.strCategory || NOT_RECORDED}</dd>
+              <dt>Area</dt>
+              <dd>{meal.strArea || NOT_RECORDED}</dd>
+              <dt>Tags</dt>
+              <dd>{meal.strTags || '—'}</dd>
+              <dt>Source</dt>
+              <dd>
+                {meal.strSource ? (
+                  <a href={meal.strSource} target="_blank" rel="noreferrer">
+                    {sourceLabel(meal.strSource)}
+                  </a>
+                ) : (
+                  '—'
+                )}
+              </dd>
+            </dl>
 
-          <h2>Ingredients</h2>
-          {ingredients.length > 0 ? (
-            <ul className={styles.ingredients}>
-              {ingredients.map((x) => (
-                <li key={x.key}>
-                  {x.name}
-                  {x.measure ? ` — ${x.measure}` : ''}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className={styles.emptyNote}>No ingredients listed.</p>
-          )}
+            <h2>Ingredients</h2>
+            {ingredients.length > 0 ? (
+              <ol className={styles.ingredients}>
+                {ingredients.map((x) => (
+                  <li key={x.key}>
+                    <span className={styles.ingName}>{x.name}</span>
+                    {x.measure ? (
+                      <span className={styles.ingMeasure}>{x.measure}</span>
+                    ) : null}
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p className={styles.emptyNote}>No ingredients listed.</p>
+            )}
 
-          <h2>Instructions</h2>
-          <p className={styles.instructions}>{formatInstructions(meal.strInstructions)}</p>
+            <h2>Instructions</h2>
+            <p className={styles.instructions}>{formatInstructions(meal.strInstructions)}</p>
+          </div>
         </div>
-      </div>
+        <figcaption className={styles.caption}>
+          Photograph and recipe text sourced from TheMealDB.com.
+        </figcaption>
+      </figure>
     </article>
   )
 }

@@ -4,7 +4,7 @@
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 1rem;
-  padding-top: 0.5rem;
+  padding-top: 0.6rem;
   border-top: 1px solid var(--color-border);
 }
 
@@ -12,6 +12,7 @@
   font-size: 0.85rem;
   color: var(--color-text-muted);
   font-style: italic;
+  font-family: var(--font-serif);
 }
 
 .sortChips {
@@ -28,7 +29,6 @@
   composes: pillOn from '../index.css';
 }
 
-/* Compact order toggle — no gradient, no decorative arrow chip. */
 .orderToggle {
   margin-left: auto;
   min-width: 7rem;
@@ -43,15 +43,9 @@
 }
 
 .orderToggle:hover {
-  background: var(--color-text);
-  border-color: var(--color-text);
-  color: var(--color-bg);
-}
-
-.orderArrow {
-  display: inline-block;
-  font-size: 0.85rem;
-  line-height: 1;
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-accent-hover);
 }
 
 @media (max-width: 640px) {
