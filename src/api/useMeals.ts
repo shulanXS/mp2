@@ -2,9 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { fetchAllMeals, fetchCategories } from './mealdb'
 import type { MealSummary } from '../types'
 
-// The catalogue is fetched once across all 26 letters in parallel, so every
-// meal has a real strCategory and strArea from the start. The promise is
-// cached at module scope and dropped on failure so retry() really retries.
+// Cached at module scope so repeated mounts (StrictMode, route changes)
+// don't refetch; cleared on failure so retry() actually retries.
 let allPromise: Promise<MealSummary[]> | null = null
 
 export function useCategories() {
@@ -37,14 +36,11 @@ export function useCategories() {
   return { categories, error, retry }
 }
 
-export function useMeals(
-  selected: string,
-  // The catalogue cannot load without categories.
-  categoriesFailed = false,
-) {
+// Returns the full unfiltered catalogue. Filtering by ?cat happens in
+// useVisibleMeals so multi-select and Detail's prev/next stay consistent.
+export function useMeals(categoriesFailed = false) {
   const [all, setAll] = useState<MealSummary[] | null>(null)
   const [error, setError] = useState('')
-  // Bumped by retry() to rerun the effect below.
   const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
@@ -71,13 +67,15 @@ export function useMeals(
     setAttempt((n) => n + 1)
   }, [])
 
-  // Error wins over the spinner, so a failure never shows "Loading..." forever.
-  if (error) return { meals: [] as MealSummary[], loading: false, error, retry }
-  if (categoriesFailed) {
-    return { meals: [] as MealSummary[], loading: false, error: 'Failed to load categories.', retry }
-  }
+  if (error)
+    return { meals: [] as MealSummary[], loading: false, error, retry }
+  if (categoriesFailed)
+    return {
+      meals: [] as MealSummary[],
+      loading: false,
+      error: 'Failed to load categories.',
+      retry,
+    }
   if (!all) return { meals: [], loading: true, error, retry }
-
-  const meals = selected ? all.filter((m) => m.strCategory === selected) : all
-  return { meals, loading: false, error, retry }
+  return { meals: all, loading: false, error, retry }
 }

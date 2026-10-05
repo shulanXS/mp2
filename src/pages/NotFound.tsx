@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import styles from './NotFound.module.css'
 
-// Catches any path that matches no route.
 export function NotFound() {
   return (
     <div className={styles.wrap}>

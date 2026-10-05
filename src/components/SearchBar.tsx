@@ -1,28 +1,30 @@
 import { useRef } from 'react'
-import { useQueryParam } from '../useVisibleMeals'
+import { useDebouncedQueryParam } from '../useVisibleMeals'
 import styles from './SearchBar.module.css'
 
-// Shared by the list and gallery. Driven by ?q=.
 export function SearchBar() {
-  const [query, setQuery] = useQueryParam()
+  const [, local, setLocal] = useDebouncedQueryParam(150)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const hasText = local.trim().length > 0
 
   return (
     <div className={styles.controls}>
       <input
         ref={inputRef}
         type="text"
+        className={styles.input}
         placeholder="Search meals..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        value={local}
+        onChange={(e) => setLocal(e.target.value)}
         aria-label="Search meals"
       />
-      {query.trim() && (
+      {hasText && (
         <button
+          type="button"
           className={styles.clearSearch}
           onClick={() => {
-            setQuery('')
-            // Keep focus in the field.
+            setLocal('')
             inputRef.current?.focus()
           }}
           aria-label="Clear search"

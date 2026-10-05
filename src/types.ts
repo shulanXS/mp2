@@ -7,17 +7,25 @@ export type Meal = {
   strInstructions: string
   strTags: string
   strSource: string
-  // The API returns many more fields per meal; only the rendered ones are named.
+  // The API returns many more fields; only the rendered ones are named.
   [k: string]: string
 }
 
 export type MealSummary = Pick<
   Meal,
-  'idMeal' | 'strMeal' | 'strMealThumb' | 'strArea' | 'strCategory'
+  'idMeal' | 'strMeal' | 'strMealThumb' | 'strArea' | 'strCategory' | 'strTags'
 >
 
-type SortKey = 'strMeal' | 'strArea' | 'strCategory'
-type Order = 'asc' | 'desc'
+export function parseTags(raw: string | undefined | null): string[] {
+  if (!raw) return []
+  return raw
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean)
+}
+
+export type SortKey = 'strMeal' | 'strArea' | 'strCategory'
+export type Order = 'asc' | 'desc'
 
 export const SORT_KEYS: readonly SortKey[] = ['strMeal', 'strArea', 'strCategory']
 
@@ -29,7 +37,7 @@ export const SORT_LABELS: Record<SortKey, string> = {
 
 export const NOT_RECORDED = 'Not recorded'
 
-// Unknown params fall back to the default so a hand-edited URL can't break.
+// Unknown URL values fall back to defaults so hand-edited URLs don't break.
 export function parseSortKey(v: string | null): SortKey {
   return SORT_KEYS.find((k) => k === v) ?? 'strMeal'
 }

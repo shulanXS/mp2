@@ -11,8 +11,6 @@ type Props = {
 }
 
 export function List({ meals, categories, loading }: Props) {
-  // Carried into the detail view so Back returns here, and prev/next walk the
-  // same query and ordering.
   const [params] = useSearchParams()
 
   return (

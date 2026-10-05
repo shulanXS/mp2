@@ -2,11 +2,9 @@ import { parseOrder, parseSortKey, SORT_LABELS, SORT_KEYS } from '../types'
 import { useUrlParam } from '../useVisibleMeals'
 import styles from './SortBar.module.css'
 
-// Sort control shared by the list and gallery.
 export function SortBar() {
   const [sortKey, setSortKey] = useUrlParam('sort')
   const [order, setOrder] = useUrlParam('order')
-  // Re-validated on read so a hand-edited ?sort= can't break the page.
   const active = parseSortKey(sortKey)
   const direction = parseOrder(order)
 
@@ -30,6 +28,7 @@ export function SortBar() {
       <button
         className={styles.orderToggle}
         onClick={toggle}
+        aria-label={`Sort order: ${direction === 'asc' ? 'ascending' : 'descending'}. Activate to switch.`}
         title={
           direction === 'asc'
             ? 'Currently ascending. Activate to sort descending.'

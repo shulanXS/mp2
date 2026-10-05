@@ -2,28 +2,31 @@ import type { ReactNode } from 'react'
 import { CategoryFilter } from './CategoryFilter'
 import { SearchBar } from './SearchBar'
 import { SortBar } from './SortBar'
-import { useQueryParam, useVisibleMeals } from '../useVisibleMeals'
+import { useDebouncedQueryParam, useVisibleMeals } from '../useVisibleMeals'
 import type { MealSummary } from '../types'
 
 type Props = {
   meals: MealSummary[]
   categories: string[]
   loading: boolean
-  /** <li> contents differ per view; everything around them does not. */
   renderItems: (visible: MealSummary[]) => ReactNode
-  /** Accessible name for the list, e.g. "Meals" or "Meal gallery". */
   label: string
-  /** Page's own column width, e.g. 220px for rows, 160px for tiles. */
   className: string
 }
 
-// The list and the gallery differ only in how a row is drawn, so the search
-// box, category chips, sort control, count and empty state live here.
-export function MealResults({ meals, categories, loading, renderItems, label, className }: Props) {
-  const [query, setQuery] = useQueryParam()
-  // Same hook the detail view uses, so "Next" walks exactly this order.
+// List and gallery share this; only the row markup differs.
+export function MealResults({
+  meals,
+  categories,
+  loading,
+  renderItems,
+  label,
+  className,
+}: Props) {
+  const [urlQuery, , setLocal] = useDebouncedQueryParam()
   const visible = useVisibleMeals(meals)
-  const searching = query.trim().length > 0
+  const trimmed = urlQuery.trim()
+  const searching = trimmed.length > 0
 
   return (
     <div>
@@ -36,18 +39,18 @@ export function MealResults({ meals, categories, loading, renderItems, label, cl
       {!loading && visible.length > 0 && (
         <p className="count">
           {visible.length} {visible.length === 1 ? 'meal' : 'meals'}
-          {searching ? ` matching “${query.trim()}”` : ''}
+          {searching ? ` matching “${trimmed}”` : ''}
         </p>
       )}
 
       {loading ? (
-        <p>Loading...</p>
+        <p>Loading…</p>
       ) : visible.length === 0 ? (
         <p>
           {searching ? (
             <>
-              No meals match “{query.trim()}”.{' '}
-              <button className="linkButton" onClick={() => setQuery('')}>
+              No meals match “{trimmed}”.{' '}
+              <button className="linkButton" onClick={() => setLocal('')}>
                 Show all meals
               </button>
             </>

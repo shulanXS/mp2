@@ -6,8 +6,8 @@ import { NOT_RECORDED } from '../types'
 import type { Meal, MealSummary } from '../types'
 import styles from './Detail.module.css'
 
-// The API mixes \r\n, \r\r and stray \r, which would render as blank lines
-// under white-space: pre-line.
+// The API mixes \r\n and stray \r; normalize once so white-space: pre-line
+// renders cleanly.
 function formatInstructions(raw: string): string {
   const text = raw.replace(/\r\n?/g, '\n').trim()
   if (!text) return 'No instructions provided.'
@@ -18,9 +18,6 @@ function formatInstructions(raw: string): string {
     .join('\n\n')
 }
 
-type Props = { meals: MealSummary[] }
-
-// Shows the host rather than a 120-character URL.
 function sourceLabel(url: string): string {
   try {
     const { hostname, pathname } = new URL(url)
@@ -32,6 +29,9 @@ function sourceLabel(url: string): string {
   }
 }
 
+type Props = { meals: MealSummary[] }
+
+// Origin comes from router state since the referrer is unreliable.
 export function Detail({ meals }: Props) {
   const { id } = useParams()
   const [params] = useSearchParams()
@@ -40,47 +40,55 @@ export function Detail({ meals }: Props) {
   const [meal, setMeal] = useState<Meal | null>(null)
   const [error, setError] = useState('')
 
-  // A referrer check cannot tell "arrived from /gallery" from "opened in a new
-  // tab", so the origin is passed through router state.
   const fromGallery = (location.state as { from?: string } | null)?.from === '/gallery'
 
-  // The list's own filtering and ordering, so Next/Previous walk the sequence
-  // the user actually saw.
   const siblings = useVisibleMeals(meals)
 
   useEffect(() => {
     if (!id) return
-    setMeal(null)
-    setError('')
     let alive = true
     fetchMeal(id)
-      .then((m) => alive && setMeal(m))
-      .catch(() => alive && setError('Failed to load this meal.'))
+      .then((m) => {
+        if (!alive) return
+        setError('')
+        setMeal(m)
+      })
+      .catch(() => {
+        if (!alive) return
+        setError('Failed to load this meal.')
+        setMeal(null)
+      })
     return () => {
       alive = false
     }
   }, [id])
 
-  // Siblings come from the ?cat= in the URL, so a direct link still gets prev/next.
   const index = siblings.findIndex((m) => m.idMeal === id)
   const total = siblings.length
   const target = (delta: number) => {
-    if (index < 0) return
+    if (index < 0 || total === 0) return
     const next = (index + delta + total) % total
-    navigate({ pathname: `/detail/${siblings[next].idMeal}`, search: params.toString() })
+    navigate({
+      pathname: `/detail/${siblings[next].idMeal}`,
+      search: params.toString(),
+    })
   }
 
   if (error) return <p className={styles.error}>{error}</p>
-  if (!meal) return <p>Loading...</p>
+  if (!meal) return <p>Loading…</p>
   const ingredients = Array.from({ length: 20 }, (_, i) => i + 1)
-    .map((i) => ({ name: meal[`strIngredient${i}`]?.trim(), measure: meal[`strMeasure${i}`]?.trim() }))
+    .map((i) => ({
+      name: meal[`strIngredient${i}`]?.trim(),
+      measure: meal[`strMeasure${i}`]?.trim(),
+    }))
     .filter((x) => x.name)
-    // Index is in the key: a recipe can list salt twice with different measures.
+    // Index in the key: a recipe can list the same ingredient twice with
+    // different measures.
     .map((x, i) => ({ ...x, key: `${x.name}-${i}` }))
 
   return (
     <article className={styles.detail}>
-      <nav className={styles.nav}>
+      <nav className={styles.nav} aria-label="Meal navigation">
         <button onClick={() => target(-1)} disabled={index < 0}>
           ← Previous
         </button>
@@ -90,9 +98,11 @@ export function Detail({ meals }: Props) {
               {index + 1} of {total}
             </span>
           )}
-          {/* Filled and first in the tab order: this is the way out. */}
           <Link
-            to={{ pathname: fromGallery ? '/gallery' : '/', search: params.toString() }}
+            to={{
+              pathname: fromGallery ? '/gallery' : '/',
+              search: params.toString(),
+            }}
             className={styles.back}
           >
             ← Back to {fromGallery ? 'gallery' : 'list'}

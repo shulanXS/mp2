@@ -25,6 +25,25 @@
   margin-top: 0.5rem;
   font-size: 0.8rem;
   color: #7a6a5a;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.clear {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: #b4560f;
+  text-decoration: underline;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.clear:hover {
+  background: none;
+  color: #8f4309;
 }
 
 @media (max-width: 640px) {
