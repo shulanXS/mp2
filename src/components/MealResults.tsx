@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { CategoryFilter } from './CategoryFilter'
 import { SearchBar } from './SearchBar'
 import { SortBar } from './SortBar'
@@ -20,10 +21,14 @@ type Props = {
 // The list and the gallery differ only in how a row is drawn, so the search
 // box, category chips, sort control, count and empty state live here.
 export function MealResults({ meals, categories, loading, renderItems, label, className }: Props) {
+  const [params] = useSearchParams()
   const [query, setQuery] = useQueryParam()
   // Same hook the detail view uses, so "Next" walks exactly this order.
   const visible = useVisibleMeals(meals)
   const searching = query.trim().length > 0
+  // Inside a single category every meal shares the same strCategory, so
+  // sorting by it would only re-tiebreak on Name -- hide that chip.
+  const categoryLocked = !!params.get('cat')
 
   return (
     <div>
@@ -31,7 +36,7 @@ export function MealResults({ meals, categories, loading, renderItems, label, cl
 
       <CategoryFilter categories={categories} />
 
-      <SortBar />
+      <SortBar disableSortKey={categoryLocked ? 'strCategory' : undefined} />
 
       {!loading && visible.length > 0 && (
         <p className="count">
