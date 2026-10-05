@@ -28,10 +28,9 @@ export function SortBar() {
           <span className={styles.arrow} aria-hidden="true">
             {direction === 'asc' ? '↑' : '↓'}
           </span>
-          <span>{direction === 'asc' ? 'Ascending' : 'Descending'}</span>
+          {direction === 'asc' ? 'Asc' : 'Desc'}
         </button>
       </div>
-
       <div className={styles.sortChips} role="group" aria-label="Sort by">
         {SORT_KEYS.map((k) => (
           <button

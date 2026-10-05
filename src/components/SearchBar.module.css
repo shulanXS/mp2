@@ -1,7 +1,8 @@
-.controls {
+.wrap {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
+  min-width: 0;
 }
 
 .label {
@@ -16,11 +17,12 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .icon {
   position: absolute;
-  left: 0.95rem;
+  left: 0.85rem;
   color: var(--color-text-faint);
   pointer-events: none;
   transition: color var(--t-fast);
@@ -32,13 +34,13 @@
   flex: 1;
   width: 100%;
   min-width: 0;
-  padding: 0.7rem 2.5rem 0.7rem 2.5rem;
+  padding: 0.65rem 2.4rem 0.65rem 2.4rem;
   font-size: var(--fs-base);
 }
 
 .clearSearch {
   position: absolute;
-  right: 0.5rem;
+  right: 0.45rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;

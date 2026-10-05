@@ -9,7 +9,7 @@ export function SearchBar() {
   const hasText = local.trim().length > 0
 
   return (
-    <div className={styles.controls}>
+    <div className={styles.wrap}>
       <label className={styles.label} htmlFor="meal-search">
         Search
       </label>
@@ -34,7 +34,7 @@ export function SearchBar() {
           ref={inputRef}
           type="text"
           className={styles.input}
-          placeholder="Try “carbonara”, “thai”, “cake”…"
+          placeholder="Search meals, areas, tags…"
           value={local}
           onChange={(e) => setLocal(e.target.value)}
           aria-label="Search meals"

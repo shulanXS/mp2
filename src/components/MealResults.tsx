@@ -31,29 +31,33 @@ export function MealResults({
 
   return (
     <section className={styles.shell}>
-      <div className={styles.intake}>
-        <div className={styles.intakeText}>
-          <p className={styles.eyebrow}>
-            {searching ? 'Refining the index' : 'Browsing the index'}
-          </p>
-          <h2 className={styles.headline}>
-            {searching ? (
-              <>
-                Meals matching <em>“{trimmed}”</em>
-              </>
-            ) : (
-              <>What will you cook next?</>
-            )}
-          </h2>
-          <p className={styles.lede}>
-            Search, sort, and filter through {meals.length} dishes from
-            TheMealDB. Tap any name to read the full method.
-          </p>
-        </div>
+      <div className={styles.hero}>
+        <p className={styles.eyebrow}>
+          {searching ? 'Refining the index' : 'Browsing the index'}
+        </p>
+        <h2 className={styles.headline}>
+          {searching ? (
+            <>
+              Meals matching <em>“{trimmed}”</em>
+            </>
+          ) : (
+            <>What will you cook next?</>
+          )}
+        </h2>
+        <p className={styles.lede}>
+          Search, sort, and filter through {meals.length} dishes from
+          TheMealDB. Tap any name to read the full method.
+        </p>
+      </div>
 
-        <div className={styles.controls}>
+      <div className={styles.controls}>
+        <div className={styles.controlSearch}>
           <SearchBar />
+        </div>
+        <div className={styles.controlFilters}>
           <CategoryFilter categories={categories} />
+        </div>
+        <div className={styles.controlSort}>
           <SortBar />
         </div>
       </div>
