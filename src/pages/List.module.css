@@ -1,22 +1,18 @@
 .list {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  counter-reset: meal;
 }
 
-/* ---------------------------------------------------------------------------
- * Row — a flat ink-on-paper card with a quiet numerical prefix and a thin
- * inner ring on hover. The card never lifts dramatically; hover deepens the
- * border and shows the meta tags in accent color, like a flag being placed.
- * ------------------------------------------------------------------------- */
+/* Row — flat card. Hover deepens the border and reveals a thin accent rule
+ * on the left; the right-arrow appears in the corner. No decorative numbers. */
 .row {
   position: relative;
   display: flex;
   gap: 1rem;
   align-items: center;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: var(--hairline);
   border-radius: var(--radius);
-  padding: 0.85rem 1rem 0.85rem 1.25rem;
+  padding: 0.85rem 1rem;
   height: 100%;
   color: inherit;
   overflow: hidden;
@@ -27,7 +23,6 @@
     box-shadow var(--t-fast);
 }
 
-/* Accent hairline on the left — only visible on hover. */
 .row::after {
   content: '';
   position: absolute;
@@ -41,23 +36,8 @@
   transition: transform var(--t-base);
 }
 
-/* Quiet counter prefix in the upper-left corner. */
-.row::before {
-  content: counter(meal, decimal-leading-zero);
-  counter-increment: meal;
-  position: absolute;
-  top: 0.6rem;
-  left: 0.6rem;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.62rem;
-  color: var(--color-text-faint);
-  letter-spacing: 0.08em;
-  pointer-events: none;
-}
-
 .row:hover {
   border-color: var(--color-text);
-  background: var(--color-surface);
   text-decoration: none;
   transform: translateY(-2px);
   box-shadow: var(--shadow-2);
@@ -75,9 +55,7 @@
   transition: transform var(--t-slow);
 }
 
-.row:hover img {
-  transform: scale(1.04);
-}
+.row:hover img { transform: scale(1.04); }
 
 .rowText {
   min-width: 0;
@@ -88,13 +66,11 @@
 }
 
 .row h2 {
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
   font-size: var(--fs-md);
-  font-weight: 500;
+  font-weight: 600;
   overflow-wrap: anywhere;
   color: var(--color-text);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 .rowMeta {
@@ -114,11 +90,8 @@
   display: inline-block;
 }
 
-.row:hover .rowDot {
-  background: var(--color-mark);
-}
+.row:hover .rowDot { background: var(--color-accent); }
 
-/* "Read →" affordance that appears in the upper-right on hover. */
 .rowArrow {
   align-self: center;
   width: 26px;
@@ -150,6 +123,6 @@
 }
 
 @media (max-width: 540px) {
-  .row { padding: 0.75rem 0.85rem 0.75rem 1rem; }
+  .row { padding: 0.75rem 0.85rem; }
   .row img { width: 60px; height: 60px; }
 }

@@ -1,87 +1,71 @@
 .shell {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 /* ---------------------------------------------------------------------------
- * Intake — a hero block at the top of every list/gallery page. On the left:
- * editorial headline. On the right: a compact, stacked control rail that
- * drops below on narrow screens.
+ * Intake — headline on the left, control rail on the right. Switches to a
+ * single column once the screen is too narrow to fit both side by side.
+ * No decorative marks: the typography does the work.
  * ------------------------------------------------------------------------- */
 .intake {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: 2.5rem;
-  align-items: end;
-  padding: 2.5rem 0 1.75rem;
-  border-bottom: 1px solid var(--color-border-strong);
-  position: relative;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 1.5rem 0 1.75rem;
+  border-bottom: var(--hairline-strong);
 }
 
-/* A small inked mark on the left edge of the intake — reads as a chapter
- * number without actually printing one. */
-.intake::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 1px;
-  background: var(--color-text);
+@media (min-width: 880px) {
+  .intake {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: start;
+    gap: 3rem;
+    padding: 2.25rem 0 2rem;
+  }
 }
 
 .intakeText {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.6rem;
   max-width: 38ch;
 }
 
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
   font-size: var(--fs-xs);
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   font-weight: 500;
 }
 
-.eyebrowDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-mark);
-  display: inline-block;
-}
-
 .headline {
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-  font-size: var(--fs-3xl);
-  line-height: 1.02;
-  letter-spacing: -0.025em;
-  font-weight: 400;
+  font-size: var(--fs-xl);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
   color: var(--color-text);
 }
 
-.headlineMark {
-  font-style: italic;
+.headline em {
+  font-style: normal;
   color: var(--color-accent);
-  /* keep italic accent words from breaking across lines mid-word */
-  word-break: keep-all;
+}
+
+@media (min-width: 880px) {
+  .headline { font-size: var(--fs-2xl); line-height: 1.08; }
 }
 
 .lede {
   font-size: var(--fs-md);
   color: var(--color-text-muted);
-  line-height: 1.5;
+  line-height: 1.55;
   max-width: 44ch;
 }
 
-/* Control rail — sits inside the intake on the right. Each control gets
- * its own well, separated by hairline spacing rather than a card border. */
+/* Control rail — sits beside the headline on wide screens, below on narrow. */
 .controls {
   display: flex;
   flex-direction: column;
@@ -93,18 +77,6 @@
   box-shadow: var(--shadow-1);
 }
 
-@media (max-width: 880px) {
-  .intake {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1.75rem 0 1.25rem;
-  }
-  .headline { font-size: var(--fs-2xl); }
-}
-
-/* When the controls stack on narrow viewports the search bar should feel
- * like the primary input. */
 @media (max-width: 540px) {
   .controls { padding: 1rem; }
-  .headline { font-size: 1.9rem; }
 }

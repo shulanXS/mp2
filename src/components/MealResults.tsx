@@ -31,24 +31,22 @@ export function MealResults({
 
   return (
     <section className={styles.shell}>
-      <header className={styles.intake}>
+      <div className={styles.intake}>
         <div className={styles.intakeText}>
           <p className={styles.eyebrow}>
-            <span className={styles.eyebrowDot} aria-hidden="true" />
-            {searching ? 'Refining' : 'Browsing'} the index
+            {searching ? 'Refining the index' : 'Browsing the index'}
           </p>
           <h2 className={styles.headline}>
             {searching ? (
               <>
-                Meals matching{' '}
-                <span className={styles.headlineMark}>“{trimmed}”</span>
+                Meals matching <em>“{trimmed}”</em>
               </>
             ) : (
               <>What will you cook next?</>
             )}
           </h2>
           <p className={styles.lede}>
-            Search, sort, and filter through {meals.length} curated dishes from
+            Search, sort, and filter through {meals.length} dishes from
             TheMealDB. Tap any name to read the full method.
           </p>
         </div>
@@ -58,7 +56,7 @@ export function MealResults({
           <CategoryFilter categories={categories} />
           <SortBar />
         </div>
-      </header>
+      </div>
 
       {!loading && visible.length > 0 && (
         <p className="count">

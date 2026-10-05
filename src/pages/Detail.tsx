@@ -141,10 +141,6 @@ export function Detail({ meals }: Props) {
           <div className={styles.figureFrame}>
             <img src={meal.strMealThumb} alt={meal.strMeal} />
           </div>
-          <figcaption className={styles.figureCaption}>
-            <span>{meal.idMeal}</span>
-            <span><strong>Recipe</strong> · 01</span>
-          </figcaption>
           {meal.strYoutube && (
             <a
               href={meal.strYoutube}
@@ -152,6 +148,9 @@ export function Detail({ meals }: Props) {
               rel="noreferrer"
               className={styles.youtube}
             >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+                <path d="M3 1.5v11l9-5.5z" />
+              </svg>
               Watch on YouTube
             </a>
           )}
@@ -159,19 +158,16 @@ export function Detail({ meals }: Props) {
 
         <div className={styles.recipe}>
           <header className={styles.titleBlock}>
-            <span className={styles.titleEyebrow}>The recipe</span>
             <h1 className={styles.title}>{meal.strMeal}</h1>
+            <p className={styles.titleMeta}>
+              {meal.strCategory || NOT_RECORDED}
+              {meal.strArea && meal.strArea !== meal.strCategory && (
+                <> · {meal.strArea}</>
+              )}
+            </p>
           </header>
 
           <dl className={styles.meta}>
-            <div className={styles.metaRow}>
-              <dt className={styles.metaLabel}>Category</dt>
-              <dd className={styles.metaValue}>{meal.strCategory || NOT_RECORDED}</dd>
-            </div>
-            <div className={styles.metaRow}>
-              <dt className={styles.metaLabel}>Area</dt>
-              <dd className={styles.metaValue}>{meal.strArea || NOT_RECORDED}</dd>
-            </div>
             <div className={styles.metaRow}>
               <dt className={styles.metaLabel}>Tags</dt>
               <dd className={styles.metaValue}>

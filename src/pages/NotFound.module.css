@@ -1,34 +1,21 @@
 .wrap {
   text-align: left;
-  padding: 3.5rem 0 2rem;
-  margin: 0 auto;
+  padding: 3rem 0 2rem;
   max-width: 580px;
-  position: relative;
 }
 
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
   font-size: var(--fs-xs);
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   font-weight: 500;
   margin-bottom: 1.25rem;
 }
 
-.eyebrow::before {
-  content: '';
-  width: 1.5rem;
-  height: 1px;
-  background: var(--color-text-muted);
-}
-
 .title {
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
   font-size: var(--fs-2xl);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
@@ -36,9 +23,8 @@
 }
 
 .title em {
-  font-style: italic;
+  font-style: normal;
   color: var(--color-accent);
-  font-weight: 400;
 }
 
 .body {

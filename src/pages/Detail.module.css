@@ -4,12 +4,7 @@
   gap: 2rem;
 }
 
-/* ---------------------------------------------------------------------------
- * Paginator — a slim chapter strip across the top of the detail view.
- * Previous/Next are quiet pill buttons; the position sits in the center as
- * a small "n / total" indicator. The "back" link sits on the right as a
- * plain text affordance.
- * ------------------------------------------------------------------------- */
+/* Paginator — slim chapter strip across the top of the detail view. */
 .paginator {
   display: flex;
   align-items: center;
@@ -17,7 +12,7 @@
   gap: 1rem;
   flex-wrap: wrap;
   padding: 0.75rem 0;
-  border-bottom: 1px solid var(--color-border-strong);
+  border-bottom: var(--hairline-strong);
 }
 
 .navGroup {
@@ -51,22 +46,12 @@
   border-color: var(--color-accent);
 }
 
-.navBtn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
 .navBtn svg {
   transition: transform var(--t-fast);
 }
 
-.navBtn:hover:not(:disabled) svg {
-  transform: translateX(2px);
-}
-
-.navBtnPrev:hover:not(:disabled) svg {
-  transform: translateX(-2px);
-}
+.navBtn:hover:not(:disabled) svg { transform: translateX(2px); }
+.navBtnPrev:hover:not(:disabled) svg { transform: translateX(-2px); }
 
 .position {
   display: inline-flex;
@@ -85,14 +70,8 @@
   font-size: var(--fs-base);
 }
 
-.positionSep {
-  color: var(--color-text-faint);
-  margin: 0 0.1rem;
-}
-
-.positionTotal {
-  color: var(--color-text-faint);
-}
+.positionSep { color: var(--color-text-faint); margin: 0 0.1rem; }
+.positionTotal { color: var(--color-text-faint); }
 
 .back {
   display: inline-flex;
@@ -115,10 +94,7 @@
   text-decoration: none;
 }
 
-/* ---------------------------------------------------------------------------
- * Body — figure on the left (sticky), content on the right. On narrow
- * screens the figure comes first and loses its sticky behavior.
- * ------------------------------------------------------------------------- */
+/* Body — figure on the left (sticky), content on the right. */
 .body {
   display: grid;
   grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
@@ -128,12 +104,9 @@
 
 .figure {
   margin: 0;
-  position: relative;
-  background: var(--color-surface);
-  border: var(--hairline);
-  border-radius: var(--radius-lg);
-  padding: 0.85rem;
-  box-shadow: var(--shadow-2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
   position: sticky;
   top: 1.5rem;
 }
@@ -143,7 +116,7 @@
   overflow: hidden;
   border-radius: var(--radius);
   background: var(--color-surface-3);
-  border: 1px solid var(--color-border);
+  border: var(--hairline);
   aspect-ratio: 1;
 }
 
@@ -155,39 +128,17 @@
   transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.figure:hover img {
-  transform: scale(1.03);
-}
-
-.figureCaption {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 0.8rem;
-  padding-top: 0.6rem;
-  border-top: 1px dotted var(--color-border-strong);
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.66rem;
-  color: var(--color-text-faint);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.figureCaption strong {
-  color: var(--color-text);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-}
+.figure:hover img { transform: scale(1.03); }
 
 .youtube {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  margin-top: 0.85rem;
   padding: 0.7rem 1rem;
   background: var(--color-text);
   color: var(--color-bg);
+  border: 1px solid var(--color-text);
   border-radius: var(--radius);
   font-size: var(--fs-xs);
   font-weight: 500;
@@ -196,41 +147,20 @@
   text-decoration: none;
   transition:
     background var(--t-fast),
-    color var(--t-fast);
-}
-
-.youtube::before {
-  content: '';
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--color-bg);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.youtube::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 5px solid var(--color-text);
-  border-top: 3px solid transparent;
-  border-bottom: 3px solid transparent;
-  margin-left: 7px;
+    color var(--t-fast),
+    border-color var(--t-fast);
 }
 
 .youtube:hover {
   background: var(--color-accent);
+  border-color: var(--color-accent);
   color: var(--color-bg);
   text-decoration: none;
 }
 
-/* ---------------------------------------------------------------------------
- * Recipe column — title, meta grid, sections.
- * ------------------------------------------------------------------------- */
+.youtube svg { flex-shrink: 0; }
+
+/* Recipe column — title, meta grid, sections. */
 .recipe {
   display: flex;
   flex-direction: column;
@@ -241,47 +171,34 @@
 .titleBlock {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
   padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--color-border-strong);
-}
-
-.titleEyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-size: var(--fs-xs);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  font-weight: 500;
-}
-
-.titleEyebrow::before {
-  content: '';
-  width: 1.5rem;
-  height: 1px;
-  background: var(--color-text-muted);
+  border-bottom: var(--hairline-strong);
 }
 
 .title {
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-  font-size: var(--fs-3xl);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  font-weight: 500;
+  font-size: var(--fs-2xl);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 600;
   color: var(--color-text);
 }
 
-/* Meta grid — small data table with a hairline rule and label/value rows. */
+.titleMeta {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* Meta — slim hairline grid with label/value rows. */
 .meta {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0;
   margin: 0;
   font-size: var(--fs-sm);
-  border-top: 1px solid var(--color-border-strong);
-  border-bottom: 1px solid var(--color-border-strong);
+  border-top: var(--hairline-strong);
+  border-bottom: var(--hairline-strong);
 }
 
 .metaRow {
@@ -293,18 +210,13 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.metaRow:nth-last-child(-n+2) {
-  border-bottom: 0;
-}
-
-.metaRow + .metaRow {
-  border-left: 1px solid var(--color-border);
-}
+.metaRow:nth-last-child(-n+2) { border-bottom: 0; }
+.metaRow + .metaRow { border-left: 1px solid var(--color-border); }
 
 .metaLabel {
   font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-text-faint);
   font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -324,9 +236,7 @@
   text-underline-offset: 3px;
 }
 
-.metaValue a:hover {
-  color: var(--color-accent-hover);
-}
+.metaValue a:hover { color: var(--color-accent-hover); }
 
 .metaMuted {
   color: var(--color-text-faint);
@@ -334,7 +244,7 @@
   font-weight: 400 !important;
 }
 
-/* Section header — small label, hairline below, optional count. */
+/* Section — title row + content. */
 .section {
   display: flex;
   flex-direction: column;
@@ -346,24 +256,12 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
   font-size: var(--fs-lg);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-text);
   letter-spacing: -0.01em;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--color-border-strong);
-  position: relative;
-}
-
-.sectionTitle::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  width: 28px;
-  height: 3px;
-  background: var(--color-accent);
+  border-bottom: var(--hairline-strong);
 }
 
 .sectionCount {
@@ -372,10 +270,8 @@
   font-weight: 500;
   color: var(--color-text-faint);
   letter-spacing: 0.04em;
-  font-style: normal;
 }
 
-/* Ingredients — two columns on wide screens, dotted rows. */
 .ingredients {
   list-style: none;
   display: grid;
@@ -419,13 +315,11 @@
   margin-left: auto;
   padding-left: 0.5rem;
   font-style: italic;
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
 }
 
-/* Instructions — readable block with a serif body and an ink-bar margin. */
 .instructions {
   white-space: pre-line;
-  line-height: 1.85;
+  line-height: 1.78;
   font-size: var(--fs-md);
   color: var(--color-text);
   background: var(--color-surface);
@@ -433,7 +327,7 @@
   border-left: 3px solid var(--color-accent);
   border-radius: var(--radius);
   padding: 1.5rem 1.75rem;
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  font-family: 'Iowan Old Style', 'Source Serif Pro', Georgia, serif;
   font-feature-settings: 'liga' 1, 'kern' 1;
 }
 
@@ -448,19 +342,14 @@
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  .figure {
-    position: relative;
-    top: 0;
-  }
+  .figure { position: relative; top: 0; }
 }
 
 @media (max-width: 640px) {
-  .meta {
-    grid-template-columns: 1fr;
-  }
+  .meta { grid-template-columns: 1fr; }
   .metaRow + .metaRow {
     border-left: 0;
     border-top: 1px solid var(--color-border);
   }
-  .title { font-size: var(--fs-2xl); }
+  .title { font-size: var(--fs-xl); }
 }

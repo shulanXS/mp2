@@ -48,13 +48,6 @@ export function CategoryFilter({ categories }: Props) {
           )
         })}
       </div>
-      <p className={styles.status}>
-        {selected.length === 0
-          ? 'Showing every category'
-          : selected.length === 1
-            ? `Showing ${selected[0]}`
-            : `Showing ${selected.length} categories: ${selected.join(', ')}`}
-      </p>
     </div>
   )
 }

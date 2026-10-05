@@ -1,6 +1,3 @@
-/* Search field is a single bar: small caps label on top, then a text input
- * with an inline magnifier icon. The clear "×" button only appears once
- * the field has content, so the bar reads as a single element until then. */
 .controls {
   display: flex;
   flex-direction: column;
@@ -10,7 +7,7 @@
 .label {
   font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-text-faint);
 }
@@ -29,9 +26,7 @@
   transition: color var(--t-fast);
 }
 
-.field:focus-within .icon {
-  color: var(--color-accent);
-}
+.field:focus-within .icon { color: var(--color-accent); }
 
 .input {
   flex: 1;

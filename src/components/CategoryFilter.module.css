@@ -14,7 +14,7 @@
 .label {
   font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-text-faint);
 }
@@ -49,14 +49,6 @@
 .clear:hover {
   background: none;
   color: var(--color-accent-hover);
-}
-
-.status {
-  font-size: var(--fs-xs);
-  color: var(--color-text-muted);
-  letter-spacing: 0.02em;
-  font-style: italic;
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
 }
 
 @media (max-width: 540px) {

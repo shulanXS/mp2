@@ -2,11 +2,8 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
-/* ---------------------------------------------------------------------------
- * Card — a polished editorial tile. Image is wrapped in a thin frame; the
- * title sits in a dark ink strip pinned to the bottom of the image. On hover
- * the strip recedes and the title sets in serif over a soft veil.
- * ------------------------------------------------------------------------- */
+/* Card — image with a thin frame, title in a dark ink strip pinned to the
+ * bottom. On hover the image scales up and the strip tilts slightly. */
 .card {
   position: relative;
   display: flex;
@@ -45,32 +42,11 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1),
-              filter var(--t-base);
-  filter: saturate(0.95);
+  transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.card:hover img {
-  transform: scale(1.06);
-  filter: saturate(1.05);
-}
+.card:hover img { transform: scale(1.06); }
 
-/* Ink veil that hides the title at rest, lifts on hover. */
-.veil {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(20, 20, 18, 0.78) 100%);
-  opacity: 0.92;
-  transition: opacity var(--t-base);
-  pointer-events: none;
-}
-
-.card:hover .veil {
-  opacity: 1;
-  background: linear-gradient(180deg, rgba(20, 20, 18, 0.05) 0%, rgba(20, 20, 18, 0.4) 60%, rgba(20, 20, 18, 0.85) 100%);
-}
-
-/* View marker — a thin "View" pill with chevron in the top-right. */
 .view {
   position: absolute;
   top: 0.55rem;
@@ -81,7 +57,6 @@
   padding: 0.25rem 0.55rem 0.25rem 0.6rem;
   background: var(--color-bg);
   color: var(--color-text);
-  border: 1px solid var(--color-bg);
   border-radius: 999px;
   font-size: 0.66rem;
   font-weight: 500;
@@ -97,28 +72,26 @@
   transform: translate(0, 0);
 }
 
-/* Caption block — sits on top of the veil at the bottom of the image. */
+/* Caption — sits on a dark ink strip at the bottom of the image. */
 .caption {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 1rem 0.9rem 0.85rem;
+  padding: 0.85rem 0.9rem;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
   color: var(--color-bg);
-  transform: translateY(0);
-  transition: transform var(--t-base);
+  background: linear-gradient(180deg, transparent 0%, rgba(20, 20, 18, 0.7) 60%);
 }
 
 .name {
   display: block;
-  font-family: 'Fraunces', 'Iowan Old Style', Georgia, serif;
-  font-size: var(--fs-md);
-  font-weight: 500;
+  font-size: var(--fs-base);
+  font-weight: 600;
   letter-spacing: -0.01em;
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--color-bg);
   overflow-wrap: anywhere;
 }

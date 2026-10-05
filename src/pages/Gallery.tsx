@@ -30,7 +30,6 @@ export function Gallery({ meals, categories, loading }: Props) {
             >
               <div className={styles.frame}>
                 <img src={m.strMealThumb} alt="" loading="lazy" />
-                <span className={styles.veil} aria-hidden="true" />
                 <span className={styles.view} aria-hidden="true">
                   View
                   <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">

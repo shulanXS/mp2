@@ -16,30 +16,25 @@ export default function App() {
   return (
     <div className={styles.app}>
       <header className={styles.header}>
-        <h1 className={styles.brand}>
-          <Link to="/" className={styles.brandLink}>
-            <span className={styles.brandMark} aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="13" r="7" />
-                <circle cx="12" cy="13" r="3.6" stroke="currentColor" strokeOpacity="0.5" strokeWidth="1" />
-                <path d="M9.2 6 L9.2 11.5" />
-                <path d="M14.8 6 L14.8 11.5" />
-                <path d="M8.4 6 L8.4 8.5" />
-                <path d="M10 6 L10 8.5" />
-                <path d="M14 6 L14 8.5" />
-                <path d="M15.6 6 L15.6 8.5" />
-              </svg>
-            </span>
-            <span className={styles.brandText}>
-              <span className={styles.brandTitle}>Table</span>
-              <span className={styles.brandSub}>a small meal directory</span>
-            </span>
-          </Link>
-        </h1>
+        <Link to="/" className={styles.brand} aria-label="Table — back to home">
+          <span className={styles.brandMark} aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="13" r="7" />
+              <path d="M9.2 6 L9.2 11.5" />
+              <path d="M14.8 6 L14.8 11.5" />
+              <path d="M8.4 6 L8.4 8.5" />
+              <path d="M10 6 L10 8.5" />
+              <path d="M14 6 L14 8.5" />
+              <path d="M15.6 6 L15.6 8.5" />
+            </svg>
+          </span>
+          <span className={styles.brandText}>
+            <span className={styles.brandTitle}>Table</span>
+            <span className={styles.brandSub}>A small meal directory</span>
+          </span>
+        </Link>
         <nav className={styles.nav} aria-label="Main">
-          <NavLink to="/" end>
-            Index
-          </NavLink>
+          <NavLink to="/" end>Index</NavLink>
           <NavLink to="/gallery">Gallery</NavLink>
         </nav>
       </header>
