@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { NOT_RECORDED, parseOrder, parseSortKey, SORT_KEYS, parseTags } from './types'
 import type { MealSummary, Order, SortKey } from './types'
@@ -92,20 +92,24 @@ export function useUrlParam(
   { replace = false }: { replace?: boolean } = {},
 ): [string, (next: string) => void] {
   const [params, setParams] = useSearchParams()
-  const set = useCallback(
-    (value: string) => {
-      setParams(
-        (prev) => {
-          const next = new URLSearchParams(prev)
-          if (value) next.set(key, value)
-          else next.delete(key)
-          return next
-        },
-        { replace },
-      )
-    },
-    [key, replace, setParams],
-  )
+  // Stash setParams in a ref so the setter callback's identity is stable.
+  // setSearchParams' reference changes every time the URL changes, which
+  // would otherwise cause the SortBar / CategoryFilter to re-render in a
+  // loop after every navigation.
+  const setParamsRef = useRef(setParams)
+  setParamsRef.current = setParams
+  const replaceRef = useRef(replace)
+  replaceRef.current = replace
+  const keyRef = useRef(key)
+  keyRef.current = key
+
+  const set = useCallback((value: string) => {
+    const next = new URLSearchParams(params)
+    if (value) next.set(keyRef.current, value)
+    else next.delete(keyRef.current)
+    setParamsRef.current(next, { replace: replaceRef.current })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params])
   return [params.get(key) ?? '', set]
 }
 
@@ -115,16 +119,16 @@ export function useMultiCategory(): {
   clear: () => void
 } {
   const [params, setParams] = useSearchParams()
+  const setParamsRef = useRef(setParams)
+  setParamsRef.current = setParams
   const selected = readMulti(params, 'cat')
 
   const setSelected = useCallback(
     (next: string[]) => {
-      setParams(
-        (prev) => writeMulti(prev, 'cat', next),
-        { replace: false },
-      )
+      setParamsRef.current(writeMulti(params, 'cat', next), { replace: false })
     },
-    [setParams],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [params],
   )
 
   const toggle = useCallback(
@@ -140,6 +144,7 @@ export function useMultiCategory(): {
         setSelected([...current, name])
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [params, setSelected],
   )
 
@@ -154,6 +159,15 @@ export function useDebouncedQueryParam(delayMs = 150): [string, string, (next: s
   const [params, setParams] = useSearchParams()
   const urlQuery = params.get('q') ?? ''
   const [local, setLocal] = useState(urlQuery)
+  // react-router-dom v7 re-creates setSearchParams on every navigation
+  // (its useCallback depends on a useMemo'd `searchParams`). If we put it
+  // in the effect's deps, the effect re-runs after every URL change, which
+  // re-schedules the debounce, which causes another URL change, ... —
+  // a render storm that white-screens the page the moment the user types.
+  // Stash it in a ref so the effect only re-runs when the typed text
+  // actually changes.
+  const setParamsRef = useRef(setParams)
+  setParamsRef.current = setParams
 
   useEffect(() => {
     if (local !== urlQuery) setLocal(urlQuery)
@@ -163,18 +177,16 @@ export function useDebouncedQueryParam(delayMs = 150): [string, string, (next: s
   useEffect(() => {
     if (local === urlQuery) return
     const t = setTimeout(() => {
-      setParams(
-        (prev) => {
-          const next = new URLSearchParams(prev)
-          if (local.trim()) next.set('q', local)
-          else next.delete('q')
-          return next
-        },
-        { replace: true },
-      )
+      const next = new URLSearchParams(params)
+      if (local.trim()) next.set('q', local)
+      else next.delete('q')
+      setParamsRef.current(next, { replace: true })
     }, delayMs)
     return () => clearTimeout(t)
-  }, [local, urlQuery, delayMs, setParams])
+    // params is a stable reference (useMemo on location.search) so it's
+    // safe to read inside the effect without listing it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [local, urlQuery, delayMs])
 
   return [urlQuery, local, setLocal]
 }
