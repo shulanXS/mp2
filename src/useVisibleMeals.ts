@@ -33,9 +33,9 @@ export function useVisibleMeals(meals: MealSummary[]): MealSummary[] {
     const matched = meals.filter((m) => {
       if (catSet && !catSet.has(m.strCategory)) return false
       if (!q) return true
-      if (m.strMeal.toLowerCase().includes(q)) return true
-      if (m.strArea.toLowerCase().includes(q)) return true
-      if (m.strCategory.toLowerCase().includes(q)) return true
+      if ((m.strMeal ?? '').toLowerCase().includes(q)) return true
+      if ((m.strArea ?? '').toLowerCase().includes(q)) return true
+      if ((m.strCategory ?? '').toLowerCase().includes(q)) return true
       for (const t of parseTags(m.strTags)) {
         if (t.toLowerCase().includes(q)) return true
       }
