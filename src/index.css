@@ -1,9 +1,4 @@
-/* ---------------------------------------------------------------------------
- * Design tokens
- *
- * Paper + ink + a single green accent. Quieter than the previous pass — fewer
- * decorative marks, more breathing room, the type does the editorial work.
- * ------------------------------------------------------------------------- */
+/* Design tokens. */
 :root {
   --color-bg: #f7f4ee;
   --color-bg-2: #f1ece3;
@@ -216,9 +211,7 @@ input[type='text'].bare:focus {
 }
 .linkButton:hover { background: none; color: var(--color-accent-hover); }
 
-/* ---------------------------------------------------------------------------
- * Pill — used by sort and category chips.
- * ------------------------------------------------------------------------- */
+/* Pill (sort and category chips). */
 .pill {
   border-radius: 999px;
   padding: 0.32rem 0.85rem;

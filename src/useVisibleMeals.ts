@@ -18,9 +18,7 @@ function writeMulti(
   return next
 }
 
-// Shared by list, gallery and detail. Filters by ?cat and ?q, then sorts.
-// Tie-break chain: rotate secondaries so each primary is visibly distinct
-// even when one column is constant (e.g. inside cat=Beef).
+// Rotate secondaries per primary so ties don't all collapse on one value.
 export function useVisibleMeals(meals: MealSummary[]): MealSummary[] {
   const [params] = useSearchParams()
   const query = params.get('q') ?? ''
@@ -56,9 +54,6 @@ export function useVisibleMeals(meals: MealSummary[]): MealSummary[] {
     const keyMissing = (v: string) =>
       v === NOT_RECORDED || v.trim() === ''
 
-    // Direction-agnostic: returns -1/0/1 in ascending order; the caller
-    // multiplies by `dir` for present-vs-present but skips the flip when
-    // either side is missing so missing rows always sink to the bottom.
     const compareKey = (
       a: MealSummary,
       b: MealSummary,
@@ -73,6 +68,7 @@ export function useVisibleMeals(meals: MealSummary[]): MealSummary[] {
       if (bm) return -1
       return av.localeCompare(bv)
     }
+    // Missing values sink to the bottom regardless of direction.
     const cmp = (a: MealSummary, b: MealSummary): number => {
       for (const key of orderKeys) {
         const r = compareKey(a, b, key)
@@ -92,10 +88,8 @@ export function useUrlParam(
   { replace = false }: { replace?: boolean } = {},
 ): [string, (next: string) => void] {
   const [params, setParams] = useSearchParams()
-  // Stash setParams in a ref so the setter callback's identity is stable.
-  // setSearchParams' reference changes every time the URL changes, which
-  // would otherwise cause the SortBar / CategoryFilter to re-render in a
-  // loop after every navigation.
+  // setSearchParams swaps identity on every URL change; pin it in a ref so
+  // the callback below stays stable and doesn't re-render callers.
   const setParamsRef = useRef(setParams)
   setParamsRef.current = setParams
   const replaceRef = useRef(replace)
@@ -108,7 +102,6 @@ export function useUrlParam(
     if (value) next.set(keyRef.current, value)
     else next.delete(keyRef.current)
     setParamsRef.current(next, { replace: replaceRef.current })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params])
   return [params.get(key) ?? '', set]
 }
@@ -127,7 +120,6 @@ export function useMultiCategory(): {
     (next: string[]) => {
       setParamsRef.current(writeMulti(params, 'cat', next), { replace: false })
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [params],
   )
 
@@ -144,7 +136,6 @@ export function useMultiCategory(): {
         setSelected([...current, name])
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [params, setSelected],
   )
 
@@ -153,25 +144,16 @@ export function useMultiCategory(): {
   return { selected, toggle, clear }
 }
 
-// Search input is locally controlled; URL (?q=) is updated on idle so a
-// long query does not flood history.
 export function useDebouncedQueryParam(delayMs = 150): [string, string, (next: string) => void] {
   const [params, setParams] = useSearchParams()
   const urlQuery = params.get('q') ?? ''
   const [local, setLocal] = useState(urlQuery)
-  // react-router-dom v7 re-creates setSearchParams on every navigation
-  // (its useCallback depends on a useMemo'd `searchParams`). If we put it
-  // in the effect's deps, the effect re-runs after every URL change, which
-  // re-schedules the debounce, which causes another URL change, ... —
-  // a render storm that white-screens the page the moment the user types.
-  // Stash it in a ref so the effect only re-runs when the typed text
-  // actually changes.
+  // See useUrlParam — setParams' identity is not stable.
   const setParamsRef = useRef(setParams)
   setParamsRef.current = setParams
 
   useEffect(() => {
     if (local !== urlQuery) setLocal(urlQuery)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlQuery])
 
   useEffect(() => {
@@ -183,10 +165,7 @@ export function useDebouncedQueryParam(delayMs = 150): [string, string, (next: s
       setParamsRef.current(next, { replace: true })
     }, delayMs)
     return () => clearTimeout(t)
-    // params is a stable reference (useMemo on location.search) so it's
-    // safe to read inside the effect without listing it.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [local, urlQuery, delayMs])
+  }, [local, urlQuery, delayMs, params])
 
   return [urlQuery, local, setLocal]
 }

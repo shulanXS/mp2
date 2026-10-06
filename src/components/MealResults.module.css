@@ -4,12 +4,7 @@
   gap: 1.5rem;
 }
 
-/* ---------------------------------------------------------------------------
- * Intro — the page-opening spread. Serif headline italic for the editorial
- * feel, narrow kicker above (a chapter number / status line), lede below in
- * the same serif at smaller size. Sits at the top of every list/gallery
- * page and is the first thing the reader sees.
- * ------------------------------------------------------------------------- */
+/* Intro. */
 .intro {
   display: flex;
   flex-direction: column;
@@ -74,10 +69,7 @@
   .headline { max-width: none; }
 }
 
-/* ---------------------------------------------------------------------------
- * Toolbar — search (flex-grow) and sort (fixed-width). On narrow screens
- * they stack. Separated from the headline by a single hairline.
- * ------------------------------------------------------------------------- */
+/* Toolbar. */
 .toolbar {
   display: flex;
   flex-direction: column;

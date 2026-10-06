@@ -107,9 +107,7 @@
   .nav { align-self: stretch; }
 }
 
-/* ---------------------------------------------------------------------------
- * Error banner — single accent rule on the left, no extra dot.
- * ------------------------------------------------------------------------- */
+/* Error banner. */
 .error {
   display: flex;
   align-items: center;

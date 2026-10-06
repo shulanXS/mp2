@@ -7,7 +7,7 @@ export type Meal = {
   strInstructions: string
   strTags: string
   strSource: string
-  // The API returns many more fields; only the rendered ones are named.
+  // API returns many more fields; only the rendered ones are named.
   [k: string]: string
 }
 

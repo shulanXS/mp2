@@ -15,7 +15,7 @@ type Props = {
   className: string
 }
 
-// List and gallery share this; only the row markup differs.
+// Shared by list and gallery; only the row markup differs.
 export function MealResults({
   meals,
   categories,

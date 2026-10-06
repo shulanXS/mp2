@@ -6,8 +6,7 @@ import { NOT_RECORDED } from '../types'
 import type { Meal, MealSummary } from '../types'
 import styles from './Detail.module.css'
 
-// The API mixes \r\n and stray \r; normalize once so white-space: pre-line
-// renders cleanly.
+// API mixes \r\n and bare \r; flatten for white-space: pre-line.
 function formatInstructions(raw: string): string {
   const text = raw.replace(/\r\n?/g, '\n').trim()
   if (!text) return 'No instructions provided.'
@@ -87,8 +86,8 @@ export function Detail({ meals }: Props) {
       measure: meal[`strMeasure${i}`]?.trim(),
     }))
     .filter((x) => x.name)
-    // Index in the key: a recipe can list the same ingredient twice with
-    // different measures.
+    // A recipe can list the same ingredient twice with different measures;
+    // the index disambiguates.
     .map((x, i) => ({ ...x, key: `${x.name}-${i}` }))
 
   return (

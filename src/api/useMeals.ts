@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { fetchAllMeals, fetchCategories } from './mealdb'
 import type { MealSummary } from '../types'
 
-// Cached at module scope so repeated mounts (StrictMode, route changes)
-// don't refetch; cleared on failure so retry() actually retries.
+// Module-level cache so StrictMode double-mount and route changes don't
+// refetch; nulled on failure so retry() actually retries.
 let allPromise: Promise<MealSummary[]> | null = null
 
 export function useCategories() {
